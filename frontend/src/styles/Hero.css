@@ -1,0 +1,12 @@
+/* .center-image{
+   background-color: black;
+} */
+
+img {
+    display: relative;
+    height:400px;
+    width:400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -12rem;
+ }
