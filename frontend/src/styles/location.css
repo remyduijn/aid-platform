@@ -1,0 +1,15 @@
+.map-position {
+    width: 100vw;
+    height: 95vh;
+}
+
+.info-wrapper {
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.3rem;
+}
+
+.info-wrapper h3 {
+    font-size: 1.1rem;
+    padding-bottom: 0.3rem;
+}

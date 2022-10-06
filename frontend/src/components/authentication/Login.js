@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import '../../styles/Hero.css';
 
 export default class Login extends Component {
   constructor(props) {
@@ -24,7 +25,8 @@ export default class Login extends Component {
   handleSubmit(event) {
     const { email, password } = this.state;
 
-      axios.post("http://localhost:3001/sessions", {
+    axios
+      .post("http://localhost:3001/sessions", {
         user: {
           email: email,
           password: password
@@ -34,8 +36,10 @@ export default class Login extends Component {
       )
       .then(response => {
         // console.log("res from login", response);
-        if (response.data.status === 'created') {
-        this.props.handleSuccessfulAuth(response.data);
+
+        // if (response.data.status === 'created') {
+        if (response.data.logged_in) {
+          this.props.handleSuccessfulAuth(response.data);
         }
       })
       .catch(error => {
@@ -50,6 +54,7 @@ export default class Login extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <input 
+            className="break1"
             type="email" 
             name="email" 
             placeholder='Email' 
@@ -57,8 +62,9 @@ export default class Login extends Component {
             onChange={this.handleChange} 
             required 
           />
-
+          <br/>
           <input 
+            className="break1"
             type="password" 
             name="password" 
             placeholder='Password' 
@@ -66,8 +72,8 @@ export default class Login extends Component {
             onChange={this.handleChange} 
             required 
           />
-
-          <button type="submit">Login</button>
+          <br/>
+          <button className="button" type="submit">Login</button>
         </form>
       </div>
     );
