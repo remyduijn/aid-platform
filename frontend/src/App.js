@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import styled from 'styled-components';
 import axios from 'axios';
 import './App.css';
 import Home from './pages';
 import Dashboard from './pages/Dashboard';
 import Signin from './pages/Signin';
-import Navigation from './components/Navbar';
 import Signup from './pages/Signup';
 import Map from './pages/Map';
-
-
-const DIV = styled.div`
-    background-color: #ff9b9b; 
-    padding-top: 18rem;
-
-    @media screen and (max-width: 1330px) {
-
-    }
-`;
+import PrivateRoutes from './components/PrivateRoutes';
+import ChatRoom from './pages/ChatRoom';
 
 export default class App extends Component {
+
   constructor() {
     super();
 
@@ -44,17 +35,17 @@ export default class App extends Component {
         ) {
           this.setState({
             loggedInStatus: "LOGGED_IN",
-            user: response.data.user
-          });
+            user: response.data.user,
+          })
         } else if (
           !response.data.logged_in & 
           (this.state.loggedInStatus === "LOGGED_IN") 
         ) {
           this.setState({
             loggedInStatus: "NOT_LOGGED_IN",
-            user: {}
+            user: {},
           });
-        }
+        } 
       })
       .catch(error => {
         console.log("check login error", error);
@@ -75,33 +66,24 @@ export default class App extends Component {
   handleLogin(data) {
     this.setState({
       loggedInStatus: "LOGGED_IN",
-      user: data.user
+      user: data.user,
     });
   }
 
-
-  
 
   render() {
     return (
       <div className="App">
       <Router>
-        <Navigation handleLogout={this.handleLogout}/>
-        <DIV></DIV>
         <Routes>
-          <Route 
-            path='/'
-            element={
-              <Home 
-              />
-            }
-          />
+          <Route element={<PrivateRoutes />}>
+            <Route path='/' element={<Home/>} exact/>
+          </Route>
           <Route 
             path='/dashboard' 
             element={
               <Dashboard 
                 loggedInStatus={this.state.loggedInStatus}
-                // user={this.state.user}
               />
             }
           />
@@ -110,7 +92,6 @@ export default class App extends Component {
             element={
               <Signin
                 handleLogin={this.handleLogin} 
-                loggedInStatus={this.state.loggedInStatus}
               /> 
             }
           />
@@ -125,7 +106,13 @@ export default class App extends Component {
           />
           <Route 
             path='/community' 
-            element={<Map/>}/>
+            element={<Map/>}
+          />
+          <Route 
+            path='/chatroom' 
+            element={<ChatRoom/>}
+          />
+
         </Routes>
       </Router>
       </div>

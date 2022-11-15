@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { UseState, Component } from 'react'
+import { Link } from "react-router-dom";
 import axios from 'axios';
-import '../../styles/Hero.css';
+import '../../style.scss';
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -24,57 +26,60 @@ export default class Login extends Component {
 
   handleSubmit(event) {
     const { email, password } = this.state;
-
+    
     axios
-      .post("http://localhost:3001/sessions", {
-        user: {
-          email: email,
-          password: password
-        }
-      },
-      { withCredentials: true }
-      )
-      .then(response => {
-        // console.log("res from login", response);
-
-        // if (response.data.status === 'created') {
-        if (response.data.logged_in) {
-          this.props.handleSuccessfulAuth(response.data);
-        }
-      })
-      .catch(error => {
-        console.log("login error", error);
-      });
-
+    .post("http://localhost:3001/sessions", {
+      user: {
+        email: email,
+        password: password
+      }
+    },
+    { withCredentials: true }
+    )
+    .then(response => {
+      // console.log("res from login", response);
+      
+      if (response.data.logged_in) {
+        this.props.handleSuccessfulAuth(response.data);
+      }
+    })
+    .catch(error => {
+      console.log("login error", error);
+    });
+    
     event.preventDefault();
   }
-
+  
   render() {
     return (
-      <div>
+      <div className="formContainer">
+        <div className="formWrapper">
+        <span className="logo">Pet Platform</span>
+        <span className="title">Login</span>
+
         <form onSubmit={this.handleSubmit}>
           <input 
             className="break1"
             type="email" 
             name="email" 
-            placeholder='Email' 
+            placeholder='email' 
             value={this.state.email} 
             onChange={this.handleChange} 
             required 
           />
-          <br/>
           <input 
             className="break1"
             type="password" 
             name="password" 
-            placeholder='Password' 
+            placeholder='password' 
             value={this.state.password} 
             onChange={this.handleChange} 
             required 
           />
-          <br/>
-          <button className="button" type="submit">Login</button>
+          <button className="button" type="submit">Sign in</button>
+          <p>You don't have an account? <Link to="/signup">Register</Link></p>
         </form>
+        </div>
       </div>
     );
   }

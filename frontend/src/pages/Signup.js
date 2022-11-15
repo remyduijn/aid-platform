@@ -13,7 +13,8 @@ export default class Signup extends Component {
 
   handleSuccessfulAuth(data) {
     this.props.handleLogin(data);
-    this.props.history.push("/dashboard");
+    window.location.href = "/dashboard";
+    // this.props.history.push("/dashboard");
   }
 
 //   handleLogoutClick() {
@@ -29,14 +30,9 @@ export default class Signup extends Component {
  
   render() { 
     return (
-      <Container>  
-        <div className='marginUp'>
-            <h2>Status: {this.props.loggedInStatus}</h2>
-            {/* <button onClick={() => this.handleLogoutClick()}>Logout</button> */}
-            <br/><br/><br/>
+        <div>
             <Registration handleSuccessfulAuth={this.handleSuccessfulAuth} />
         </div>
-      </Container>
     );
   }
 }

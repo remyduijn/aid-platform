@@ -1,15 +1,28 @@
 .map-position {
-    width: 100vw;
+    width: 80vw;
     height: 95vh;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+    align-items: center;
+    justify-content: center;
 }
+
+
 
 .info-wrapper {
     text-align: center;
-    font-size: 1rem;
-    padding: 0.3rem;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-bottom: -10px;
 }
 
-.info-wrapper h3 {
-    font-size: 1.1rem;
-    padding-bottom: 0.3rem;
+section {
+    background-color: #ff8080;
+}
+
+.fontBold {
+    font-weight: 600;
+    color: rgb(39, 38, 38);
 }

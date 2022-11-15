@@ -1,105 +1,111 @@
 {
-  "type": "RiderCollection",
+  "type": "TaskCollection",
   "features": [
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "1",
-        "NAME": "Dustin",
+        "NAME": "John",
         "LAST_NAME": "Green",
-        "CITY": "Hickory Hills",
-        "STATE": "IL"
+        "UID": "J7S0DsxHvLQ6MfA5EjcFtT8LSII3",
+        "ANIMAL": "Cat",
+        "TYPE": "One-time task",
+        "STATUS": "Unfulfilled"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.35, 40.00],
-        "window_coordinates": [-105.35, 40.01]
+        "coordinates": [-27.59167956718997, -48.53070394983697],
+        "window_coordinates": [-27.59167956718997, -48.53070394983697]
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "2",
         "NAME": "Jason",
         "LAST_NAME": "Finn",
-        "CITY": "Huntington Beach",
-        "STATE": "CA"
+        "ANIMAL": "Dog",
+        "TYPE": "One-time task",
+        "STATUS": "Unfulfilled"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.24, 39.95],
-        "window_coordinates": [-105.24, 39.96]
+        "coordinates": [-27.663328781836285, -48.478862299105636],
+        "window_coordinates": [-27.663328781836285, -48.478862299105636]
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "3",
         "NAME": "Howard",
         "LAST_NAME": "Thompson",
-        "CITY": "Hale",
-        "STATE": "MO"
+        "TYPE": "One-time task",
+        "STATUS": "Unfulfilled"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.26, 40.06],
-        "window_coordinates": [-105.26, 40.07]
+        "coordinates": [-27.81590710072888, -48.560744772040096],
+        "window_coordinates": [-27.81590710072888, -48.560744772040096]
 
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "4",
         "NAME": "Maggie",
         "LAST_NAME": "Lantz",
-        "CITY": "Dublin",
-        "STATE": "OH"
+        "TYPE": "One-time task",
+        "STATUS": "Unfulfilled"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.23, 40.03],
-        "window_coordinates": [-105.23, 40.04]
+        "coordinates": [-27.39669344402704, -48.42719214799511],
+        "window_coordinates": [-27.39669344402704, -48.42719214799511]
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "5",
         "NAME": "Lawrence",
         "LAST_NAME": "Duran",
-        "CITY": "Fort Myers",
-        "STATE": "FL"
+        "TYPE": "One-time task",
+        "STATUS": "Unfulfilled"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.23, 40.04],
-        "window_coordinates": [-105.23, 40.05]
+        "coordinates": [-27.5, -48.5],
+        "window_coordinates": [-27.5, -48.5]
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "6",
         "NAME": "Irene",
         "LAST_NAME": "Molina",
-        "CITY": "Tucson",
-        "STATE": "AZ"
+        "TYPE": "One-time task",
+        "STATUS": "Unfulfilled"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-105.22, 39.96],
-        "window_coordinates": [-105.22, 39.97]
+        "coordinates": [-27.61, -48.53],
+        "window_coordinates": [-27.61, -48.53]
       }
     },
+
+
+
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "7",
         "NAME": "Nancy",
         "LAST_NAME": "Garner",
-        "CITY": "Baltimore",
-        "STATE": "MD"
+        "TYPE": "One-time task",
+        "STATUS": "Unfulfilled"
       },
       "geometry": {
         "type": "Point",
@@ -108,7 +114,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "8",
         "NAME": "Tara",
@@ -123,7 +129,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "9",
         "NAME": "Alejandro",
@@ -138,7 +144,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "10",
         "NAME": "Tricia",
@@ -153,7 +159,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "11",
         "NAME": "Travis",
@@ -168,7 +174,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "12",
         "NAME": "Joan",
@@ -183,7 +189,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "13",
         "NAME": "Joseph",
@@ -198,7 +204,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "14",
         "NAME": "Matthew",
@@ -213,7 +219,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "15",
         "NAME": "Katie",
@@ -228,7 +234,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "16",
         "NAME": "Leo",
@@ -243,7 +249,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "17",
         "NAME": "Maria",
@@ -258,7 +264,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "18",
         "NAME": "Sandy",
@@ -273,7 +279,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "19",
         "NAME": "Melinda",
@@ -288,7 +294,7 @@
       }
     },
     {
-      "type": "Rider",
+      "type": "Task",
       "properties": {
         "ID": "20",
         "NAME": "Jason",

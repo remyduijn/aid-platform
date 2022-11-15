@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Login from '../components/authentication/Login';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import '../styles/Hero.css';
+
 
 export default class Signin extends Component {
   constructor(props) {
@@ -15,7 +13,11 @@ export default class Signin extends Component {
 
   handleSuccessfulAuth(data) {
     this.props.handleLogin(data);
-    this.props.history.push("/dashboard");
+    // localStorage.setItem("user", "ADMIN");
+
+    console.log(data);
+    window.location.href = "/dashboard";
+    // this.props.history.push(`/dashboard`);
   }
 
   handleLogoutClick() {
@@ -31,16 +33,9 @@ export default class Signin extends Component {
  
   render() { 
     return (
-      <Container>
-        <div className='marginUp'>
-          <h2>Status: {this.props.loggedInStatus}</h2>
-          {/* <button onClick={() => this.handleLogoutClick()}>Logout</button> */}
-          <br/><br/><br/>
+        <div>
           <Login handleSuccessfulAuth={this.handleSuccessfulAuth} /> 
-          <br/>  
-          <Link to={"/signup"}><a>Sign up</a></Link>
         </div>
-      </Container>
     );
   }
 }

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Div = styled.div`
-    background-color: #ff9b9b; 
+  background-color: #ff8080; 
 `;
 
 export default class Navigation extends Component {
@@ -23,6 +23,7 @@ export default class Navigation extends Component {
     axios
       .delete("http://localhost:3001/logout", { withCredentials: true })
       .then(response => {
+        // localStorage.removeItem("user");
         this.props.handleLogout();
       })
       .catch(error => {
@@ -36,26 +37,16 @@ export default class Navigation extends Component {
     <br />
     <Navbar expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to={"/"}>Pet-Sitters</Navbar.Brand>
+        <Navbar.Brand as={Link} to={"/"} className="fontBold">Pet Platform</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to={"/"}>Home</Nav.Link>
-            <Nav.Link as={Link} to={"/about"}>About</Nav.Link>
-            <Nav.Link as={Link} to={"/signin"}>Sign in</Nav.Link>
-            <NavDropdown title="Dashboard" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to={"/dashboard"}>Profile</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to={"/community"}>
-                Community
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to={"/messages"}>Messages</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => this.handleLogoutClick()}>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link as={Link} to={"/dashboard"}>Dashboard</Nav.Link>
+            <Nav.Link as={Link} to={"/chatroom"}>Chat</Nav.Link>
+            <Nav.Link as={Link} to={"/signin"} onClick={() => this.handleLogoutClick()}>Logout</Nav.Link>
           </Nav>
-        </Navbar.Collapse>
+        </Navbar.Collapse> 
       </Container>
     </Navbar>
     </Div>

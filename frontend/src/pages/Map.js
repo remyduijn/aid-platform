@@ -7,18 +7,20 @@ import {
   Marker,
   InfoWindow
 } from 'react-google-maps';
-import riderData from '../data/riders-positions.json';
-import mapStyles from '../mapStyles';
+import taskData from '../data/tasks.json';
+import homestayData from '../data/homestays.json';
+
+// import mapStyles from '../mapStyles';
 
 
 function Map() {
-  const [selectedRider, setselectedRider] = useState(null);
+  const [selectedTask, setselectedTask] = useState(null);
 
 
   useEffect(() => {
     const listener = e => {
       if (e.key === "Escape") {
-        setselectedRider(null);
+        setselectedTask(null);
       }
     };
     window.addEventListener("keydown", listener);
@@ -27,43 +29,66 @@ function Map() {
       window.removeEventListener("keydown", listener);
     };
   }, []);
+  
 
   return (
     <GoogleMap
-      defaultZoom={11}
-      defaultCenter={{ lat: 40.014984, lng: -105.270546 }}
-      defaultOptions={{ styles: mapStyles }}
+      defaultZoom={12}
+      defaultCenter={{ lat: -27.59167956718997, lng: -48.53070394983697 }} 
+      // defaultOptions={{ styles: mapStyles }}
     >
-      {riderData.features.map((rider) => (
+      {taskData.features.map((task) => (
         <Marker
-          key={rider.properties.ID}
+          key={task.properties.TYPE}
           position={{
-            lng: rider.geometry.coordinates[0],
-            lat: rider.geometry.coordinates[1]
+            lat: task.geometry.coordinates[0], 
+            lng: task.geometry.coordinates[1]
           }}
           onClick={() => {
-            setselectedRider(rider);
+            setselectedTask(task);
           }}
           icon={{
-            url: `/cycling.svg`,
-            scaledSize: new window.google.maps.Size(35, 35)
+            url: `/pin.svg`,
+            scaledSize: new window.google.maps.Size(35, 35),
           }}
           />
           ))}
 
-      {selectedRider && (
+      {homestayData.features.map((homestay) => (
+        <Marker
+          key={homestay.properties.TYPE}
+          position={{
+            lat: homestay.geometry.coordinates[0], 
+            lng: homestay.geometry.coordinates[1]
+          }}
+          onClick={() => {
+            setselectedTask(homestay);
+          }}
+          icon={{
+            url: `/pin2.svg`,
+            scaledSize: new window.google.maps.Size(35, 35),
+          }}
+          />
+          ))}
+
+
+      {selectedTask && (
         <InfoWindow
         onCloseClick={() => {
-          setselectedRider(null);
+          setselectedTask(null);
         }}
         position={{
-          lng: selectedRider.geometry.window_coordinates[0],
-          lat: selectedRider.geometry.window_coordinates[1]
+          lat: selectedTask.geometry.window_coordinates[0],
+          lng: selectedTask.geometry.window_coordinates[1]
           }}
           >
           <div className="info-wrapper">
-            <h3>{selectedRider.properties.NAME} {selectedRider.properties.LAST_NAME}</h3>
-            <p>{selectedRider.properties.CITY}, {selectedRider.properties.STATE}</p>
+            <a><b>{selectedTask.properties.NAME} {selectedTask.properties.LAST_NAME}</b><br/>
+            Type of request: {selectedTask.properties.TYPE}<br/>
+            Description: {selectedTask.properties.DESSCRIPTION}<br/>
+            Status: {selectedTask.properties.STATUS}<br/>
+            <button>Volunteer</button> 
+            </a>
           </div>
         </InfoWindow>
       )}
@@ -87,7 +112,6 @@ export default function Location() {
         containerElement={<div style={{ height: `100%` }} />}
         mapElement={<div style={{ height: `100%` }} />}
       />
-      <h1>Map</h1>
     </div>
   );
 }
