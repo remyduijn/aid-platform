@@ -8,5 +8,6 @@ class User < ApplicationRecord
   validates_presence_of :last_name
 
   has_one_attached :identity
+  has_many :community_requests
 end
  
