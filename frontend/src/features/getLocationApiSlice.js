@@ -1,33 +1,33 @@
-import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = {
-    loading : false,
-    data : {},
-    error : ''
-}
-
-export const Fetchdata = createAsyncThunk('api/Fetchdata' , async () => {
-    return axios
+export const Fetchdata = createAsyncThunk('api/Fetchdata', async () => {
+  return axios
     .get(`https://geolocation-db.com/json/`)
     .then(response => response.data)
 })
 
 const getLocationApiSlice = createSlice({
-    name: 'api',
-    initialState,
-    extraReducers: (builder)=>{
-        builder.addCase(Fetchdata.pending , state => {
-            state.loading = true
-        })
-        builder.addCase(Fetchdata.fulfilled , (state , action) => {
-            state.loading = false
-            state.data = action.payload
-        })
-        builder.addCase(Fetchdata.rejected , (state , action) => {
-            state.loading = false
-            state.error = action.error.message
-        })
-    }
+  name: 'getlocation',
+  initialState: {
+    loading: false,
+    data: {},
+    error: ''
+  },
+  extraReducers: {
+    [Fetchdata.pending]: (state) => {
+        console.log("pending")
+        return {...state , loading : true}
+    },
+    [Fetchdata.fulfilled]: (state, { payload }) => {
+        console.log('successfull')
+        return { ...state, movies: payload };
+    },
+    [Fetchdata.rejected]: (state) => {
+        console.log("rejected")
+        return { ...state , error : "error"}
+    }}
 })
+
+export const alldata = (state) => state.getlocation.data;
 export default getLocationApiSlice.reducer
