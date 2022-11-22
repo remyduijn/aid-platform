@@ -25,7 +25,7 @@ const useAuth=()=>{
 const  PrivateRoutes=(props) =>{
   const auth=useAuth()
 
-  return auth?<Outlet/>: <Navigate to="/login"/>
+  return auth?<Outlet/>: <Navigate to="/signin"/>
 }
 
 

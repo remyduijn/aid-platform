@@ -1,10 +1,10 @@
 import React from 'react'
-import '../style.scss';
- 
+import ChatList from '../components/chat/ChatList';
 
 const ChatRoom = () => {
   return (
-    <div>
+    <div className="scrollable sidebar">
+      <ChatList />
     </div>
   )
 }
