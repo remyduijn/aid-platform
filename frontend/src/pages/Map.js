@@ -9,6 +9,7 @@ import {
 } from 'react-google-maps';
 import taskData from '../data/tasks.json';
 import homestayData from '../data/homestays.json';
+import Navigation from "../components/Navbar";
 
 // import mapStyles from '../mapStyles';
 
@@ -105,6 +106,8 @@ export default function Location() {
   console.log(accessKey)
 
   return (
+    <>
+    <Navigation />
     <div className="map-position">
       <MapWrapped
         googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${accessKey}`}
@@ -113,5 +116,6 @@ export default function Location() {
         mapElement={<div style={{ height: `100%` }} />}
       />
     </div>
+    </>
   );
 }

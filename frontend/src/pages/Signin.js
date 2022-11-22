@@ -16,7 +16,7 @@ export default class Signin extends Component {
     // localStorage.setItem("user", "ADMIN");
 
     console.log(data);
-    window.location.href = "/dashboard";
+    window.location.href = "/community";
     // this.props.history.push(`/dashboard`);
   }
 

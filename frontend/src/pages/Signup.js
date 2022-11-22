@@ -13,7 +13,7 @@ export default class Signup extends Component {
 
   handleSuccessfulAuth(data) {
     this.props.handleLogin(data);
-    window.location.href = "/dashboard";
+    window.location.href = "/community";
     // this.props.history.push("/dashboard");
   }
 

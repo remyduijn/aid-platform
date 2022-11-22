@@ -45,6 +45,7 @@ export default class Navigation extends Component {
             <Nav.Link as={Link} to={"/dashboard"}>Dashboard</Nav.Link>
             <Nav.Link as={Link} to={"/chatroom"}>Chat</Nav.Link>
             <Nav.Link as={Link} to={"/signin"} onClick={() => this.handleLogoutClick()}>Logout</Nav.Link>
+            <Nav.Link as={Link} to={"/communityform"}> Community Help </Nav.Link>
           </Nav>
         </Navbar.Collapse> 
       </Container>
