@@ -1,15 +1,17 @@
 import React from 'react';
 import './chat.css';
+import moment from 'moment';
 
 export default function Message(props) {
     const {
       data,
       isMine,
+      time,
       startsSequence,
       endsSequence,
       showTimestamp
     } = props;
-    const friendlyTimestamp = data.timestamp;
+    const friendlyTimestamp = moment(time).format('LLL');
     return (
       <div className={[
         'message',
