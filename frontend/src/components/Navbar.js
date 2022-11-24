@@ -43,8 +43,9 @@ export default class Navigation extends Component {
           <Nav className="me-auto">
             <Nav.Link as={Link} to={"/"}>Home</Nav.Link>
             <Nav.Link as={Link} to={"/dashboard"}>Dashboard</Nav.Link>
-            <Nav.Link as={Link} to={"/chatroom"}>Chat</Nav.Link>
+            <Nav.Link as={Link} to={"/chatrooms"}>Chat</Nav.Link>
             <Nav.Link as={Link} to={"/signin"} onClick={() => this.handleLogoutClick()}>Logout</Nav.Link>
+            <Nav.Link as={Link} to={"/communityform"}> Community Help </Nav.Link>
           </Nav>
         </Navbar.Collapse> 
       </Container>

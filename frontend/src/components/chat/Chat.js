@@ -74,6 +74,7 @@ const Chat = (props) => {
           <Message
           key={conversation.id}
           isMine={conversation.isMine}
+          time={conversation.timestamp}
           startsSequence={true}
           endsSequence={true}
           showTimestamp={true}
