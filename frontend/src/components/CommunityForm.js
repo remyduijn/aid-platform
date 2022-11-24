@@ -1,35 +1,57 @@
 import { useEffect, useState } from "react"
 import Navigation from "./Navbar";
-import { useDispatch } from 'react-redux';
-import { Fetchdata } from "../features/getLocationApiSlice";
+import { useDispatch , useSelector} from 'react-redux';
 import { CommunityFormApiData } from "../features/communityFormApiSlice"
-
+// import { setCurrentLocationCooardinates } from "../features/getCurrentLocationSlice";
+// import { cooardinatesData } from "../features/getCurrentLocationSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const CommunityForm = () => {
   const [type, setType] = useState("");
   const [description, setDescription] = useState("")
+  const [cooardinate, setCooardinates] = useState([])
+  // const locationCooardinates = useSelector(cooardinatesData)
 
   const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(Fetchdata())
-  },[])
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setCooardinates({
+          "latitude": position.coords.latitude,
+          "longitude": position.coords.longitude
+        })
+        // setCurrentLocationCooardinates({
+        //   "latitude": position.coords.latitude,
+        //   "longitude": position.coords.longitude
+        // })
+      });
+    }
+  }, [])
 
   const onSubmitForm = (e) => {
     e.preventDefault()
-    debugger
     const communityRequest = {
       request_type: type,
       description: description,
-      lat: "20.30",
-      lng: "1.7990"
+      lat: cooardinate?.latitude,
+      lng: cooardinate?.longitude
     }
-    dispatch(CommunityFormApiData(communityRequest))
+    console.log(cooardinate?.latitude)
+    if(communityRequest.lat && communityRequest.lng){
+      console.log("Submited Successfully")
+      dispatch(CommunityFormApiData(communityRequest))
+    }
+    else{
+      toast('You need to allow the location permission in order to see the requests around your current location')
+    }
     setType('')
     setDescription('')
   }
-  
+
   return (
     <>
       <Navigation />
+      <ToastContainer />
       <div className="d-flex justify-content-center mt-2">
         <div className="col-6">
           <h1 className="my-4 text-center">Community Help</h1>
@@ -47,7 +69,7 @@ const CommunityForm = () => {
               </select>
             </div>
             <div className="form-group mt-3">
-              <label>Discription</label>
+              <label>Description</label>
               <textarea className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"

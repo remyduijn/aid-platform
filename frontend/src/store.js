@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import getLocationApiSlice from "./features/getLocationApiSlice";
 import communityFormApiSlice from "./features/communityFormApiSlice"
+import { currentLocationCooardinatesReducer } from "./features/getCurrentLocationSlice";
 
 const store = configureStore({
     reducer:{
-        getLocation : getLocationApiSlice,
-        communityFormApiData : communityFormApiSlice
+        communityFormApiData : communityFormApiSlice,
+        currentLocationCooardinates : currentLocationCooardinatesReducer
     }
 })
 
