@@ -63,7 +63,7 @@ function Map() {
           }}
           onClick={() => {
             setselectedTask(homestay);
-          }}
+          }}selectedTask
           icon={{
             url: `/pin2.svg`,
             scaledSize: new window.google.maps.Size(35, 35),

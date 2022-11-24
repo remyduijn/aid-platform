@@ -10,7 +10,7 @@ class CommunityRequestsController < ApplicationController
   def create
     @community_request = CommunityRequest.new(community_request_params)
     @community_request.user_id = 1
-    debugger
+    
     if @community_request.save
       render json: {request: @community_request, status: :ok}
     else
