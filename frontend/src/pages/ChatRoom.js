@@ -24,10 +24,6 @@ useEffect(() => {
       <div className="scrollable sidebar">
         <ConversationList data={chats}/>
       </div>
-
-      <div className="scrollable content">
-        <MessageList />
-      </div>
     </div>
     );
 }

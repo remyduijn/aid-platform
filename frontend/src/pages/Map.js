@@ -66,16 +66,9 @@ if (allVolunteersData) {
 }
 
 const moveToChatArea = () => {
-  const path = '/chatroom'
+  const path = '/chatrooms'
   navigate(path)
 }
-// const setDefaultCenter = () => {
-//   allVolunteers?.map(item => 
-//     {defaultLat += item.lat;
-//     defaultLng += item.lng;}
-
-//     )
-// }
 return (
   <>
     <GoogleMap

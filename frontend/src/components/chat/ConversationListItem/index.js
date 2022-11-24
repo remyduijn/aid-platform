@@ -3,9 +3,7 @@ import './ConversationListItem.css';
 import photo from '../../../images/user.png'
 import {Link} from "react-router-dom";
 export default function ConversationListItem(props) {
-  const getconversation = () => {
-
-  }
+ 
   return (
     <Link to={`/chatrooms/${props.data.id}`}>
       <div className="conversation-list-item" >
