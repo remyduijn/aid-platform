@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   delete :logout, to: "sessions#logout"
   get :logged_in, to: "sessions#logged_in"
   resources :community_requests, only: [:index, :create, :update], path: '/requests'
-  resources :chat_rooms, only: [:index, :create]
-  resources :messages, only: [:create]
 
+  resources :chat_rooms, only: [:index, :create] do
+    resources :messages, only: [:create]
+  end
 end

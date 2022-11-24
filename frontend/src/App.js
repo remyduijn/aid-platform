@@ -10,6 +10,7 @@ import Map from './pages/Map';
 import PrivateRoutes from './components/PrivateRoutes';
 import ChatRoom from './pages/ChatRoom';
 import CommunityForm from './components/CommunityForm'
+import Conversation from './components/chat/Conversation';
 
 export default class App extends Component {
 
@@ -110,12 +111,18 @@ export default class App extends Component {
             element={<Map/>}
           />
           <Route 
-            path='/chatroom' 
+            path='/chatrooms' 
             element={<ChatRoom/>}
           />
           <Route
             path='/communityform'
             element={<CommunityForm/>}
+          />
+
+          <Route 
+            exact
+            path='/chatrooms/:id' 
+            element={<Conversation />}
           />
 
         </Routes>

@@ -1,21 +1,21 @@
 import React from 'react';
-import './chat.css';
 import moment from 'moment';
+import './Message.css';
 
 export default function Message(props) {
     const {
       data,
       isMine,
-      time,
       startsSequence,
       endsSequence,
       showTimestamp
     } = props;
-    const friendlyTimestamp = moment(time).format('LLL');
+
+    const friendlyTimestamp = moment(data.timestamp).format('LLLL');
     return (
       <div className={[
         'message',
-        `${isMine == 'true' ? 'mine' : ''}`,
+        `${isMine ? 'mine' : ''}`,
         `${startsSequence ? 'start' : ''}`,
         `${endsSequence ? 'end' : ''}`
       ].join(' ')}>
@@ -28,7 +28,7 @@ export default function Message(props) {
 
         <div className="bubble-container">
           <div className="bubble" title={friendlyTimestamp}>
-            { data }
+            { data.message }
           </div>
         </div>
       </div>

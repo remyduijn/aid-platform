@@ -1,7 +1,9 @@
 class MessagesController < ApplicationController
 
+  before_action :set_char_room, only: %i[creat]
+
   def create
-    @message = Message.new(message_params)
+    @message = @chat_room.messages.new(message_params)
     if @message.save
       render json: {request: @message, status: ok}
     else
@@ -12,6 +14,11 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:sender_id, :receiver_id, :body, :chat_room_id)
+    params.require(:message).permit(:sender_id, :receiver_id, :body)
+  end
+
+  def set_char_room
+    @chat_room = ChatRoom.find_by_id(params[:chat_room_id])
+    render json: {errors: status'Chat room not found', status: 422} unless @chat_room.present?
   end
 end
