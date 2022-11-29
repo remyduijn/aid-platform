@@ -1,19 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const CommunityFormApiData = createAsyncThunk('communityFormApiData/CommunityFormApiData', async (communityRequest) => {
+export const CommunityFormApiData = createAsyncThunk('data/CommunityFormApiData', async (communityRequest) => {
   return axios
     .post(`http://localhost:3001/requests`, {
-      community_request: communityRequest
-    }).then(response => response.data)
+      community_request: communityRequest,
+      sessions: {user_id: 1}
+    },
+    { withCredentials: true }).then(response => response.data)
 })
 
-export const getCommunityFormApiData = createAsyncThunk('communityFormApiData', async () => {
+export const getCommunityFormApiData = createAsyncThunk('volunteerData/getCommunityFormApiData', async () => {
   return axios
     .get(`http://localhost:3001/requests`)
     .then(response => response.data)
 })
-
 
 const communityFormApiSlice = createSlice({
   name: 'communityFormApiData',
@@ -21,7 +22,14 @@ const communityFormApiSlice = createSlice({
     loading: false,
     data: [],
     error: '',
-    volunteerData:[]
+    volunteerData:[],
+    selectedVolunteer:{}
+  },
+  
+  reducers: {
+    setSelectedVolunteer: (state, action) => {
+      state.selectedVolunteer = action.payload
+    }
   },
   extraReducers: {
     [CommunityFormApiData.pending]: (state) => {
@@ -42,6 +50,8 @@ const communityFormApiSlice = createSlice({
   }
 })
 
+export const { setSelectedVolunteer } = communityFormApiSlice.actions;
+export const selectedVolunteerData = (state) => state.communityFormApiData.selectedVolunteer
 export const alldata = (state) => state.communityFormApiData.data;
 export const allVolunteerData = (state) => state.communityFormApiData.volunteerData
 export default communityFormApiSlice.reducer

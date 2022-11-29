@@ -9,6 +9,5 @@ class User < ApplicationRecord
   has_one_attached :identity
   has_many :community_requests
   has_many :chat_rooms
-
 end
  

@@ -1,5 +1,6 @@
 class ChatRoomsController < ApplicationController
-
+  include CurrentUserConcern
+  
   def index
     @chatrooms = ChatRoom.all
     @chatrooms = @chatrooms.by_logged_in_user(@current_user.id) if @current_user.present?
@@ -7,11 +8,10 @@ class ChatRoomsController < ApplicationController
   end
 
   def create
-    @chatroom               = ChatRoom.new(chat_room_params)
-    @chatroom.volunteer_id  = @current_user.id
-
+    @chatroom = ChatRoom.user_chats(@current_user.id, chat_room_params[:requester_id], chat_room_params[:community_request_id]) if @current_user.present?
+  
     if @chatroom.save
-      render json: {request: @chatroom, status: ok}
+      render json: @chatrooms, include: [:volunteer, :requester, :messages], status: 200
     else
       render json: {errors: @chatroom.errors.full_messages, status: 409}
     end

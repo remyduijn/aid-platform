@@ -6,6 +6,7 @@ import { CommunityFormApiData } from "../features/communityFormApiSlice"
 // import { cooardinatesData } from "../features/getCurrentLocationSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 const CommunityForm = () => {
   const [type, setType] = useState("");
   const [description, setDescription] = useState("")
@@ -13,6 +14,8 @@ const CommunityForm = () => {
   // const locationCooardinates = useSelector(cooardinatesData)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -40,6 +43,8 @@ const CommunityForm = () => {
     if(communityRequest.lat && communityRequest.lng){
       console.log("Submited Successfully")
       dispatch(CommunityFormApiData(communityRequest))
+      toast("Successfully Submitted")
+      navigate('/community')
     }
     else{
       toast('You need to allow the location permission in order to see the requests around your current location')

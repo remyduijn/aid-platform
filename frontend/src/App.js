@@ -81,7 +81,7 @@ export default class App extends Component {
           <Route element={<PrivateRoutes />}>
             <Route path='/' element={<Home/>} exact/>
           </Route>
-          <Route 
+          <Route
             path='/dashboard' 
             element={
               <Dashboard 
