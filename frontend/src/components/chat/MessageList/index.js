@@ -5,7 +5,6 @@ import ToolbarButton from '../ToolbarButton';
 import Message from '../Message';
 import moment from 'moment';
 import { currentConversation } from '../../../features/chatsApiSlice';
-// import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice';
 import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice';
 
 import './MessageList.css';
@@ -18,20 +17,22 @@ export default function MessageList() {
   const [messages, setMessages] = useState([])
   const currentConversationData = useSelector(currentConversation)
   const currentChatMessages = useSelector(currentChatMessagesData)
-   
+
   const loggedInUser = useSelector(loggedInUserData)
   console.log(loggedInUser , "........loggedInUser ....... in M")
   
+  useEffect(()=>{
+      setMessages((prev)=>{
+        return [
+          ...prev,
+          currentChatMessages.request
+        ]
+      })
+  }, [currentChatMessages])
+
   useEffect(() => {
     setMessages(currentConversationData?.messages)
-    console.log(currentConversationData , "currentConversationData , in Message List")
   },[currentConversationData])
-
-  useEffect(()=>{
-    
-    renderMessages()
-    console.log("render")
-  },[currentConversation])
   
   const renderMessages = () => {
     let i = 0;
@@ -91,7 +92,6 @@ export default function MessageList() {
 
     return tempMessages;
   }
-  //  console.log(messages , "messages against a chat ")
     return(
       <div className="message-list">
         <Toolbar

@@ -18,10 +18,11 @@ export default function Compose(props) {
       body: messageBody
     }
     dispatch(createCurrentChatMessagesApi(message))
+    setMessageBody("")
   }
   return (
     <>
-      <div class="input-group mb-1 compose w-50 position-fixed">
+      <div class="input-group mb-1 compose w-100 position-sticky">
         <input
           type="text"
           className="compose-input form-control"
