@@ -14,6 +14,7 @@ import { getCommunityFormApiData, allVolunteerData, setSelectedVolunteer} from "
 import Navigation from "../components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { fetchCurrentVolunteerData } from "../features/chatsApiSlice";
+import { loggedInUserData, setLoggedInUser } from "../features/userSlice";
 // import mapStyles from '../mapStyles';
 
 function Map() {
@@ -22,7 +23,7 @@ function Map() {
   const allVolunteers = useSelector(allVolunteerData)
   console.log(allVolunteers , "allVolunteers")
   const [defaultCenter, setDefaultCenter] = useState({lat: -27.59167956718997, lng: -48.53070394983697})
-  // const locationCooardinates = useSelector(currentLocationCooardinates)
+  const loggedInUser = useSelector(loggedInUserData)
 
   const navigate = useNavigate();
   const dispatch = useDispatch()
@@ -68,19 +69,19 @@ function Map() {
 if (allVolunteersData) {
   console.log(allVolunteersData, "allVolunteersData")
 }
-
 const moveToChatArea = async (selectedTask1) => {
   console.log("selectedTask" , selectedTask1)
   const requesterId = selectedTask1?.user?.id
   const communityRequestId = selectedTask1?.id
   if(requesterId !== communityRequestId){
-    dispatch(fetchCurrentVolunteerData({requesterId,communityRequestId}))
-    const path = `/chatrooms/${selectedTask1?.user?.id}`
-    navigate(path)
+    const chatId = await dispatch(fetchCurrentVolunteerData({requesterId,communityRequestId}))
+    
+      const path = `/chatrooms/${chatId.payload.id}`
+      navigate(path)
   }
 }
 return (
-  <>moveToChatArea
+  <>
     <GoogleMap
       defaultZoom={12}
       defaultCenter={{ lat: 31.45574, lng: 74.276607 }}
@@ -121,7 +122,8 @@ return (
               Type of request: {selectedTask?.request_type}<br />
               Description: {selectedTask?.description}<br />
               Status: {selectedTask?.status}<br />
-              <button onClick={() => moveToChatArea(selectedTask)}>Volunteer</button>
+              {(loggedInUser.id !== selectedTask?.user_id) ?
+              <button onClick={() => moveToChatArea(selectedTask)}>Volunteer</button> : null}
             </a>
           </div>
         </InfoWindow>
@@ -135,6 +137,7 @@ const MapWrapped = withScriptjs(withGoogleMap(Map));
 
 
 export default function Location() {
+  const loggedInUser = useSelector(loggedInUserData)
 
   const accessKey = process.env.REACT_APP_GOOGLE_KEY;
   console.log(accessKey)

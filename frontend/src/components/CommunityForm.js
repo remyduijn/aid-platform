@@ -36,8 +36,8 @@ const CommunityForm = () => {
     const communityRequest = {
       request_type: type,
       description: description,
-      lat: cooardinate?.latitude,
-      lng: cooardinate?.longitude
+      lat: (cooardinate?.latitude),
+      lng: (cooardinate?.longitude)
     }
     console.log(cooardinate?.latitude)
     if(communityRequest.lat && communityRequest.lng){

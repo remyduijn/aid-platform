@@ -19,7 +19,7 @@
 
 .compose-input {
   flex: 1;
-  border: none;
+  /* border: none; */
   font-size: 14px;
   height: 40px;
   background: none;

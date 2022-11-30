@@ -4,95 +4,45 @@ import Toolbar from '../Toolbar';
 import ToolbarButton from '../ToolbarButton';
 import Message from '../Message';
 import moment from 'moment';
+import { currentConversation } from '../../../features/chatsApiSlice';
+// import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice';
+import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice';
 
 import './MessageList.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { loggedInUserData } from '../../../features/userSlice';
 
 const MY_USER_ID = 'apple';
 
-export default function MessageList(props) {
+export default function MessageList() {
   const [messages, setMessages] = useState([])
-
-  useEffect(() => {
-    getMessages();
-  },[])
-
+  const currentConversationData = useSelector(currentConversation)
+  const currentChatMessages = useSelector(currentChatMessagesData)
+   
+  const loggedInUser = useSelector(loggedInUserData)
+  console.log(loggedInUser , "........loggedInUser ....... in M")
   
-  const getMessages = () => {
-     var tempMessages = [
-        {
-          id: 1,
-          author: 'apple',
-          message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 2,
-          author: 'orange',
-          message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 3,
-          author: 'orange',
-          message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 4,
-          author: 'apple',
-          message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 5,
-          author: 'apple',
-          message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 6,
-          author: 'apple',
-          message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 7,
-          author: 'orange',
-          message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 8,
-          author: 'orange',
-          message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 9,
-          author: 'apple',
-          message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-          timestamp: new Date().getTime()
-        },
-        {
-          id: 10,
-          author: 'orange',
-          message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-          timestamp: new Date().getTime()
-        },
-      ]
-      setMessages([...messages, ...tempMessages])
-  }
+  useEffect(() => {
+    setMessages(currentConversationData?.messages)
+    console.log(currentConversationData , "currentConversationData , in Message List")
+  },[currentConversationData])
 
+  useEffect(()=>{
+    
+    renderMessages()
+    console.log("render")
+  },[currentConversation])
+  
   const renderMessages = () => {
     let i = 0;
-    let messageCount = messages.length;
+    let messageCount = messages?.length;
     let tempMessages = [];
 
     while (i < messageCount) {
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.author === MY_USER_ID;
+      let isMine = current?.sender_id == loggedInUser?.id;
       let currentMoment = moment(current.timestamp);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
@@ -124,7 +74,6 @@ export default function MessageList(props) {
           endsSequence = false;
         }
       }
-
       tempMessages.push(
         <Message
           key={i}
@@ -142,11 +91,11 @@ export default function MessageList(props) {
 
     return tempMessages;
   }
-
+  //  console.log(messages , "messages against a chat ")
     return(
       <div className="message-list">
         <Toolbar
-          title="Conversation Title"
+          title={currentConversationData?.requester?.name}
           rightItems={[
             <ToolbarButton key="info" icon="ion-ios-information-circle-outline" />,
             <ToolbarButton key="video" icon="ion-ios-videocam" />,

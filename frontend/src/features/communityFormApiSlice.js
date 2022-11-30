@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const user=localStorage.getItem('user')
 export const CommunityFormApiData = createAsyncThunk('data/CommunityFormApiData', async (communityRequest) => {
   return axios
     .post(`http://localhost:3001/requests`, {
       community_request: communityRequest,
-      sessions: {user_id: 1}
+      session: {user_id: user} // not needed
     },
     { withCredentials: true }).then(response => response.data)
 })

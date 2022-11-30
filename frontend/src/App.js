@@ -11,12 +11,12 @@ import PrivateRoutes from './components/PrivateRoutes';
 import ChatRoom from './pages/ChatRoom';
 import CommunityForm from './components/CommunityForm'
 import Conversation from './components/chat/Conversation';
+import { connect } from 'react-redux'
+import { setLoggedInUser } from './features/userSlice';
 
-export default class App extends Component {
-
+class App extends Component {
   constructor() {
     super();
-
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
       user: {},
@@ -39,6 +39,7 @@ export default class App extends Component {
             loggedInStatus: "LOGGED_IN",
             user: response.data.user,
           })
+          this.props.setLoggedInUser(this.state.user)
         } else if (
           !response.data.logged_in & 
           (this.state.loggedInStatus === "LOGGED_IN") 
@@ -71,7 +72,7 @@ export default class App extends Component {
       user: data.user,
     });
   }
-
+  
 
   render() {
     return (
@@ -108,7 +109,7 @@ export default class App extends Component {
           />
           <Route 
             path='/community' 
-            element={<Map/>}
+            element={<Map />}
           />
           <Route 
             path='/chatrooms' 
@@ -131,6 +132,11 @@ export default class App extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoggedInUser: user =>dispatch(setLoggedInUser(user))
+  }
+}
 
-// export default App;
+export default connect(null , mapDispatchToProps)(App);
 

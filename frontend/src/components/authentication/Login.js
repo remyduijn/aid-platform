@@ -40,6 +40,8 @@ export default class Login extends Component {
       // console.log("res from login", response);
       
       if (response.data.logged_in) {
+        localStorage.setItem('user', response.data.user.id)
+
         this.props.handleSuccessfulAuth(response.data);
       }
     })

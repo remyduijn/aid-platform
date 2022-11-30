@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const user=localStorage.getItem('user')
+
 export const fetchChatsApiData = createAsyncThunk('chats/fetchChatsApiData', async () => {
   return axios
     .get(`http://localhost:3001/chat_rooms`)
@@ -14,7 +16,7 @@ export const fetchCurrentVolunteerData = createAsyncThunk('chats/fetchCurrentVol
         requester_id : requesterId,
         community_request_id : communityRequestId
       },
-      session: {user_id: 1}
+      session: {user_id: user} // not needed
     },
     { withCredentials: true })
     .then(response => response.data)
@@ -28,7 +30,8 @@ const chatsApiSlice = createSlice({
     chats: [],
     error: '',
     currentConversation: {},
-    currentVolunteer: []
+    currentVolunteer: [],
+    // singleChat: {}
   },
   reducers: {
     setCurrentConversation: (state, action) => {
@@ -41,17 +44,13 @@ const chatsApiSlice = createSlice({
       return { ...state, loading: true }
     },
     [fetchChatsApiData.fulfilled]: (state, { payload }) => {
-      console.log('successfull')
+      console.log('successfull' , )
       return { ...state, chats: payload };
     },
     [fetchChatsApiData.rejected]: (state) => {
       console.log("rejected")
       return { ...state, error: "error" }
-    },
-    [fetchCurrentVolunteerData.fulfilled]: (state, { payload }) => {
-      console.log('successfull')
-      return {...state, chats: payload };
-    },
+    }
   }
 })
 
