@@ -19,7 +19,6 @@ export default function MessageList() {
   const currentChatMessages = useSelector(currentChatMessagesData)
 
   const loggedInUser = useSelector(loggedInUserData)
-  console.log(loggedInUser , "........loggedInUser ....... in M")
   
   useEffect(()=>{
       setMessages((prev)=>{
@@ -33,6 +32,11 @@ export default function MessageList() {
   useEffect(() => {
     setMessages(currentConversationData?.messages)
   },[currentConversationData])
+
+  useEffect(()=>{
+    
+    renderMessages()
+  },[currentConversation])
   
   const renderMessages = () => {
     let i = 0;
@@ -86,7 +90,6 @@ export default function MessageList() {
         />
       );
 
-      // Proceed to the next message.
       i += 1;
     }
 

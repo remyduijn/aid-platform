@@ -21,7 +21,6 @@ function Map() {
   const [selectedTask, setselectedTask] = useState(null);
   const [allVolunteersData, setAllVolunteersData] = useState([])
   const allVolunteers = useSelector(allVolunteerData)
-  console.log(allVolunteers , "allVolunteers")
   const [defaultCenter, setDefaultCenter] = useState({lat: -27.59167956718997, lng: -48.53070394983697})
   const loggedInUser = useSelector(loggedInUserData)
 
@@ -48,7 +47,6 @@ function Map() {
   useEffect(() => {
     let defaultLat = 0.0;
     let defaultLng = 0.0;
-    console.log(allVolunteers , ".................allVolunteers")
     if (allVolunteers) {
       setAllVolunteersData(allVolunteers)
       allVolunteers?.map(item => {
@@ -57,20 +55,16 @@ function Map() {
         defaultLng = defaultLng + parseFloat(item.lng)
       })
 
-      // console.log(defaultLat.length)
       setDefaultCenter({
         lat: parseFloat(defaultLat/allVolunteers?.length),
         lng: parseFloat(defaultLng/allVolunteers?.length)
       })
-      console.log(defaultCenter)
 }
   
   }, [allVolunteers])
 if (allVolunteersData) {
-  console.log(allVolunteersData, "allVolunteersData")
 }
 const moveToChatArea = async (selectedTask1) => {
-  console.log("selectedTask" , selectedTask1)
   const requesterId = selectedTask1?.user?.id
   const communityRequestId = selectedTask1?.id
   if(requesterId !== communityRequestId){
@@ -89,7 +83,6 @@ return (
     >
       {allVolunteersData?.map((task) => (
         <>
-          {console.log(parseFloat(task?.lat))}
           <Marker
             key={task.id}
             position={{

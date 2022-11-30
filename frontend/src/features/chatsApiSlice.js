@@ -5,7 +5,7 @@ const user=localStorage.getItem('user')
 
 export const fetchChatsApiData = createAsyncThunk('chats/fetchChatsApiData', async () => {
   return axios
-    .get(`http://localhost:3001/chat_rooms`)
+    .get(`http://localhost:3001/chat_rooms?user_id=${user}`)
     .then(response => response.data)
 })
 

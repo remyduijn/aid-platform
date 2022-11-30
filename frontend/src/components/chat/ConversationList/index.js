@@ -9,13 +9,10 @@ import './ConversationList.css';
 
 export default function ConversationList() {
   const chats = useSelector(allChats)
-  // const selectedVolunteer = useSelector(selectedVolunteerData)
-  // console.log(selectedVolunteer , "selectedVolunteerdata")
   const dispatch = useDispatch()
   useEffect(() => {
     // dispatch(fetchChatsApiData())
   }, [])
-  console.log(chats, "chats of conversationList")
   return (
     <div className="conversation-list">
       <Toolbar

@@ -13,16 +13,17 @@ export default function Compose(props) {
   const sendMessage = () => {
     const message = {
       sender_id: user,
-      receiver_id: currentConversationData?.requester?.id,
+      receiver_id: currentConversationData?.requester?.id == user ? currentConversationData?.volunteer?.id : currentConversationData?.requester?.id,
       chat_room_id: currentConversationData?.id,
       body: messageBody
     }
+    setMessageBody('')
     dispatch(createCurrentChatMessagesApi(message))
     setMessageBody("")
   }
   return (
     <>
-      <div class="input-group mb-1 compose w-100 position-sticky">
+      <div class="input-group mb-1 compose w-100 position-fixed">
         <input
           type="text"
           className="compose-input form-control"
@@ -32,8 +33,8 @@ export default function Compose(props) {
           onChange={(e) => setMessageBody(e.target.value)}
           value={messageBody}
         />
-        <button class="btn btn-primary" type="button" id="button-addon2" onClick={()=> sendMessage()}> 
-        <i class="bi bi-send" ></i>
+        <button className="btn btn-primary" type="button" id="button-addon2" onClick={()=> sendMessage()}> 
+        <i className="bi bi-send" ></i>
         </button>
       </div>
     </>

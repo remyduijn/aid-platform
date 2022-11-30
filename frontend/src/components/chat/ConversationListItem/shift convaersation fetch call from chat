@@ -1,4 +1,0 @@
-shift convaersation fetch call from chatroom.js into redux
-create a function to set current convaersation
-upon clicking the chat link from convaersation list set current conversation in redux state
-in convaersation/index.js display all conversation and single convaersation

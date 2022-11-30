@@ -3,7 +3,6 @@ import moment from 'moment';
 import './Message.css';
 
 export default function Message({data , isMine , startsSequence , endsSequence , showTimestamp}) {
-  console.log(data ,isMine, "props Message data")
     const friendlyTimestamp = moment(data?.created_at).format('LLLL');
     return (
       <div className={[
