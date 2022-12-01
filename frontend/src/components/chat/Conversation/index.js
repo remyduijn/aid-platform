@@ -9,13 +9,15 @@ import { fetchChatsApiData ,allChats } from '../../../features/chatsApiSlice';
 
 export default function Conversation() {
   const currentConversationData = useSelector(currentConversation)
+  
   const CableApp = {}
   CableApp.cable = actionCable.createConsumer('ws://localhost:3001/cable')
-
+  
   const cable = CableApp.cable;
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(fetchChatsApiData())
+
     if (currentConversationData?.id) {
       cable.subscriptions.create
       (

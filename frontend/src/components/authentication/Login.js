@@ -2,7 +2,7 @@ import React, { UseState, Component } from 'react'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import '../../style.scss';
-
+import Cookies from 'js-cookie'
 
 export default class Login extends Component {
   constructor(props) {
@@ -40,8 +40,7 @@ export default class Login extends Component {
       // console.log("res from login", response);
       
       if (response.data.logged_in) {
-        localStorage.setItem('user', response.data.user.id)
-
+        Cookies.set('user', response.data.user.id)
         this.props.handleSuccessfulAuth(response.data);
       }
     })

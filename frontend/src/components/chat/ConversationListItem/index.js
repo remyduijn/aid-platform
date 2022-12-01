@@ -5,7 +5,8 @@ import photo from '../../../images/user.png'
 import {Link} from "react-router-dom";
 import {setCurrentConversation} from "../../../features/chatsApiSlice"
 import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice';
-const user=localStorage.getItem("user")
+import Cookies from 'js-cookie'
+const user=Cookies.get('user')
 export default function ConversationListItem(props) {
   const disptach = useDispatch()
   const currentChatMessages =  useSelector(currentChatMessagesData)

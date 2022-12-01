@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const user=localStorage.getItem('user')
+import Cookies from 'js-cookie'
+const user=Cookies.get('user')
 
 export const createCurrentChatMessagesApi = createAsyncThunk('currentChatMessages/createCurrentChatMessagesApi',
   async (message) => {

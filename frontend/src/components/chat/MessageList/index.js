@@ -48,7 +48,7 @@ export default function MessageList() {
       let current = messages[i];
       let next = messages[i + 1];
       let isMine = current?.sender_id == loggedInUser?.id;
-      let currentMoment = moment(current.timestamp);
+      let currentMoment = moment(current?.created_at);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
       let startsSequence = true;
@@ -57,9 +57,9 @@ export default function MessageList() {
 
       if (previous) {
         let previousMoment = moment
-        (previous.timestamp);
+        (previous.created_at);
         let previousDuration = moment.duration(currentMoment.diff(previousMoment));
-        prevBySameAuthor = previous.author === current.author;
+        prevBySameAuthor = previous?.sender_id === current?.sender_id;
         
         if (prevBySameAuthor && previousDuration.as('hours') < 1) {
           startsSequence = false;

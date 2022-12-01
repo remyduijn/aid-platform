@@ -4,7 +4,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCurrentChatMessagesApi } from '../../../features/chatRoomMessagesSlice';
 import { currentConversation } from '../../../features/chatsApiSlice';
-const user=localStorage.getItem('user')
+import Cookies from 'js-cookie'
+const user=Cookies.get('user')
 
 export default function Compose(props) {
   const [messageBody , setMessageBody] = useState()
@@ -23,7 +24,7 @@ export default function Compose(props) {
   }
   return (
     <>
-      <div class="input-group mb-1 compose w-100 position-fixed">
+      <div className="input-group mb-1 compose w-100 position-sticky">
         <input
           type="text"
           className="compose-input form-control"
