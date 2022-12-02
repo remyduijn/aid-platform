@@ -30,11 +30,11 @@ const currentChatMessagesApiSlice = createSlice({
   },
   extraReducers: {
     [createCurrentChatMessagesApi.pending]: (state) => {
-      console.log("pending")
+      // console.log("pending")
       return { ...state, loading: true }
     },
     [createCurrentChatMessagesApi.fulfilled]: (state, { payload }) => {
-      console.log('successfull')
+      // console.log('successfull')
       return { ...state, currentChatMessages: payload };
     },
     [createCurrentChatMessagesApi.rejected]: (state) => {

@@ -6,7 +6,8 @@ class MessagesController < ApplicationController
     @message = @chat_room.messages.new(message_params)
     if @message.save
       render json: {request: @message, status: 200}
-      ActionCable.server.broadcast("ChatRoomChannel#{@chat_room.id}", @message)
+      ActionCable.server.broadcast @chat_room.chat_room_name, MessageSerializer.new(@message).as_json
+
     else
       render json: {errors: @message.errors.full_messages, status: 409}
     end

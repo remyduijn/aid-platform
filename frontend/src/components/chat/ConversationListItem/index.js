@@ -8,11 +8,11 @@ import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice
 import Cookies from 'js-cookie'
 const user=Cookies.get('user')
 export default function ConversationListItem(props) {
-  const disptach = useDispatch()
+  const dispatch = useDispatch()
   const currentChatMessages =  useSelector(currentChatMessagesData)
 
   const getCurrentConversation = () => {
-     disptach(setCurrentConversation(props.data))
+    dispatch(setCurrentConversation(props.data))
   }
   return (
     <Link to={`/chatrooms/${props.data.id}`} onClick={() => getCurrentConversation()}>

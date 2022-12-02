@@ -34,11 +34,11 @@ const communityFormApiSlice = createSlice({
   },
   extraReducers: {
     [CommunityFormApiData.pending]: (state) => {
-      console.log("pending")
+      // console.log("pending")
       return { ...state, loading: true }
     },
     [CommunityFormApiData.fulfilled]: (state, { payload }) => {
-      console.log('successfull')
+      // console.log('successfull')
       return { ...state, data: payload };
     },
     [CommunityFormApiData.rejected]: (state) => {

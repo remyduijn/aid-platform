@@ -30,21 +30,28 @@ const chatsApiSlice = createSlice({
     chats: [],
     error: '',
     currentConversation: {},
-    currentVolunteer: [],
-    // singleChat: {}
+    currentVolunteer: []
   },
   reducers: {
     setCurrentConversation: (state, action) => {
       state.currentConversation = action.payload
+    },
+    setCurrentConversationMessages: (state, action) => {
+      let chat = state.currentConversation;
+      let messageArray = chat.messages;
+      messageArray.push(action.payload)
+      chat.messages = messageArray
+      state.currentConversation = chat;
     }
+
   },
   extraReducers: {
     [fetchChatsApiData.pending]: (state) => {
-      console.log("pending")
+      // console.log("pending")
       return { ...state, loading: true }
     },
     [fetchChatsApiData.fulfilled]: (state, { payload }) => {
-      console.log('successfull' , )
+      // console.log('successfull' , )
       return { ...state, chats: payload };
     },
     [fetchChatsApiData.rejected]: (state) => {
@@ -57,5 +64,6 @@ const chatsApiSlice = createSlice({
 export const allChats = (state) => state.chatsApiData.chats;
 export const currentVolunteerData = (state) => state.chatsApiData.currentVolunteer
 export const currentConversation = (state) => state.chatsApiData.currentConversation;
-export const { setCurrentConversation } = chatsApiSlice.actions
+export const currentChatConnection = (state) => state.chatsApiData.chatConnection;
+export const { setCurrentConversation, setCurrentConversationMessages } = chatsApiSlice.actions
 export default chatsApiSlice.reducer
