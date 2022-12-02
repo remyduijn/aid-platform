@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from 'js-cookie'
 const user=Cookies.get('user')
 
-export const createCurrentChatMessagesApi = createAsyncThunk('currentChatMessages/createCurrentChatMessagesApi',
+export const createCurrentChatMessageApi = createAsyncThunk('currentChatMessage/createCurrentChatMessageApi',
   async (message) => {
     return axios
       .post(`http://localhost:3001/chat_rooms/${message.chat_room_id}/messages`, {
@@ -16,35 +16,39 @@ export const createCurrentChatMessagesApi = createAsyncThunk('currentChatMessage
   })
 
 
-const currentChatMessagesApiSlice = createSlice({
-  name: 'currentChatMessagesApiData',
+const currentChatMessageApiSlice = createSlice({
+  name: 'currentChatMessageApiData',
   initialState: {
     loading: false,
-    currentChatMessages: [],
+    currentChatMessage: [],
     error: '',
+    lastMessage: {}
   },
   reducers: {
-    setCurrentChatMessages: (state, action) => {
+    setCurrentChatMessage: (state, action) => {
       state.currentConversation = action.payload
+    },
+    setLastMessage: (state, action) => {
+      state.lastMessage = action.payload
     }
   },
   extraReducers: {
-    [createCurrentChatMessagesApi.pending]: (state) => {
+    [createCurrentChatMessageApi.pending]: (state) => {
       // console.log("pending")
       return { ...state, loading: true }
     },
-    [createCurrentChatMessagesApi.fulfilled]: (state, { payload }) => {
+    [createCurrentChatMessageApi.fulfilled]: (state, { payload }) => {
       // console.log('successfull')
       return { ...state, currentChatMessages: payload };
     },
-    [createCurrentChatMessagesApi.rejected]: (state) => {
+    [createCurrentChatMessageApi.rejected]: (state) => {
       console.log("rejected", state)
       return { ...state, error: "error" }
     }
   }
 })
 
-export const currentChatMessagesData = (state) => state.currentChatMessagesApiData.currentChatMessages;
-export const { setCurrentChatMessages } = currentChatMessagesApiSlice.actions
-// const currentChatMessagesReducer = currentChatMessagesApiSlice.reducer;
-export default currentChatMessagesApiSlice.reducer
+export const currentChatMessageData = (state) => state.currentChatMessageApiData.currentChatMessage;
+export const lastMessageData = (state) => state.currentChatMessageApiData.lastMessage
+export const { setCurrentChatMessage , setLastMessage} = currentChatMessageApiSlice.actions
+export default currentChatMessageApiSlice.reducer

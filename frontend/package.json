@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@types/actioncable": "^5.2.7",
+    "@types/js-cookie": "^3.0.2",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.56.0"
   }

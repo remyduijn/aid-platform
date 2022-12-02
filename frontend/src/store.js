@@ -3,7 +3,7 @@ import communityFormApiSlice from "./features/communityFormApiSlice"
 import { currentLocationCooardinatesReducer } from "./features/getCurrentLocationSlice";
 import chatsApiSlice from "./features/chatsApiSlice";
 import {loggedInUserReducer} from "./features/userSlice";
-import currentChatMessagesApiSlice  from "./features/chatRoomMessagesSlice";
+import currentChatMessageApiSlice  from "./features/chatRoomMessagesSlice";
 
 const store = configureStore({
     reducer:{
@@ -11,7 +11,7 @@ const store = configureStore({
         currentLocationCooardinates : currentLocationCooardinatesReducer,
         chatsApiData : chatsApiSlice,
         loggedInUser : loggedInUserReducer,
-        currentChatMessagesApiData : currentChatMessagesApiSlice
+        currentChatMessageApiData : currentChatMessageApiSlice
     }
 })
 

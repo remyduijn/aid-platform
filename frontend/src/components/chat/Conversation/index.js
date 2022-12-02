@@ -3,19 +3,25 @@ import './Conversation.css';
 import ConversationList from '../ConversationList';
 import MessageList from '../MessageList';
 import { useDispatch, useSelector } from 'react-redux';
-import actionCable from 'actioncable';
-import { fetchChatsApiData, currentConversation, setCurrentConversationMessages} from '../../../features/chatsApiSlice';
-import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice';
+import { currentChatMessageData } from '../../../features/chatRoomMessagesSlice';
 import Cookies from 'js-cookie'
+import { useParams } from 'react-router-dom';
+import {currentConversation, setCurrentConversationMessages, currentVolunteerData, fetchChatsApiData, setCurrentConversation } from '../../../features/chatsApiSlice';
+import Navigation from '../../Navbar';
+import actionCable from 'actioncable'
 const user=Cookies.get('user')
 
 export default function Conversation() {
 
   const [messages, setMessages] = useState([])
-  const currentChatMessages = useSelector(currentChatMessagesData)
+  const currentChatMessages = useSelector(currentChatMessageData)
   const currentConversationData = useSelector(currentConversation)
   const dispatch = useDispatch()
-
+  const params = useParams()
+  const currentVolunteer = useSelector(currentVolunteerData)
+  if(params.id == currentVolunteer.id){
+    dispatch(setCurrentConversation(currentVolunteer))
+  }
   function createSocket() {
 
     const consumer = actionCable.createConsumer(`ws://${window.location.hostname}:3001/cable`)
@@ -44,6 +50,7 @@ export default function Conversation() {
   
   return (
     <>
+    <Navigation/>
     <div className="messenger">
       <div className="scrollable sidebar">
         <ConversationList />
@@ -53,7 +60,5 @@ export default function Conversation() {
       </div>
     </div>
     </>
-
-    
   );
 }

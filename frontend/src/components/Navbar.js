@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -23,7 +22,7 @@ export default class Navigation extends Component {
     axios
       .delete("http://localhost:3001/logout", { withCredentials: true })
       .then(response => {
-        // localStorage.removeItem("user");
+        localStorage.removeItem("user");
         this.props.handleLogout();
       })
       .catch(error => {
@@ -34,8 +33,7 @@ export default class Navigation extends Component {
   render() { 
   return (
     <Div>
-    <br />
-    <Navbar expand="lg">
+    <Navbar expand="lg" className='position-sticky'>
       <Container>
         <Navbar.Brand as={Link} to={"/"} className="fontBold">Pet Platform</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
