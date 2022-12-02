@@ -3,14 +3,20 @@ import './Compose.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCurrentChatMessageApi } from '../../../features/chatRoomMessagesSlice';
-import { currentConversation } from '../../../features/chatsApiSlice';
+import { currentConversation, setCurrentConversation, setMessages, chatMessages } from '../../../features/chatsApiSlice';
 import Cookies from 'js-cookie'
-const user=Cookies.get('user')
+const user = Cookies.get('user')
 
 export default function Compose(props) {
   const [messageBody, setMessageBody] = useState()
   const currentConversationData = useSelector(currentConversation)
+  const chatMessage = useSelector(chatMessages)
   const dispatch = useDispatch()
+  React.useEffect(() => {
+    if (chatMessage == undefined || chatMessage?.length == 0) {
+    dispatch(setMessages(currentConversationData.messages))
+    }
+  },[currentConversationData])
   const sendMessage = () => {
     if (messageBody == '') {
       return
@@ -21,14 +27,19 @@ export default function Compose(props) {
       chat_room_id: currentConversationData?.id,
       body: messageBody
     }
+    let chat = currentConversationData;
+    let aarrr = [...chatMessage, message]
+
+    dispatch(setMessages(aarrr))
+    let testingData = { ...chat, messages: [...chat.messages, message]}
     dispatch(createCurrentChatMessageApi(message))
     setMessageBody("")
   }
-  const sendMessageOnPressEnterKey=(event)=> {
+  const sendMessageOnPressEnterKey = (event) => {
     if (event.keyCode === 13) {
       sendMessage()
     }
-}
+  }
   return (
     <>
       <div className="input-group mb-1 compose w-100 position-sticky">
@@ -42,8 +53,8 @@ export default function Compose(props) {
           onKeyDown={(e) => sendMessageOnPressEnterKey(e)}
           value={messageBody}
         />
-        <button class="btn btn-primary" type="button" id="button-addon2" 
-        onClick={() => sendMessage()}
+        <button class="btn btn-primary" type="button" id="button-addon2"
+          onClick={() => sendMessage()}
         >
           <i class="bi bi-send" ></i>
         </button>

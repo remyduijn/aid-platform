@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './ConversationListItem.css';
 import { useDispatch , useSelector } from 'react-redux';
 import photo from '../../../images/user.png'
@@ -10,10 +10,12 @@ const user=Cookies.get('user')
 export default function ConversationListItem(props) {
   const disptach = useDispatch()
   const params = useParams()
-
-  if(params.id == props.data.id){
-    disptach(setCurrentConversation(props.data))
-  }
+  useEffect(() => {
+    if(params.id == props.data.id){
+      disptach(setCurrentConversation(props.data))
+    }
+    })
+  
   const getCurrentConversation = () => {
     disptach(setCurrentConversation(props.data))
   }

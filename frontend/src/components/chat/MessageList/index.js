@@ -4,7 +4,7 @@ import Toolbar from '../Toolbar';
 import ToolbarButton from '../ToolbarButton';
 import Message from '../Message';
 import moment from 'moment';
-import { currentConversation, currentVolunteerData, setCurrentConversation } from '../../../features/chatsApiSlice';
+import { currentConversation, currentVolunteerData, setCurrentConversation, chatMessages, setMessages } from '../../../features/chatsApiSlice';
 import { currentChatMessageData } from '../../../features/chatRoomMessagesSlice';
 
 import './MessageList.css';
@@ -14,9 +14,10 @@ import { loggedInUserData } from '../../../features/userSlice';
 const MY_USER_ID = 'apple';
 
 export default function MessageList() {
-  const [messages, setMessages] = useState([])
+  // const [messages, setMessages] = useState([])
   const currentConversationData = useSelector(currentConversation)
   const currentChatMessages = useSelector(currentChatMessageData)
+  const messages = useSelector(chatMessages)
 
   const loggedInUser = useSelector(loggedInUserData)
 
@@ -26,23 +27,15 @@ export default function MessageList() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  useEffect(()=>{
-      setMessages((prev)=>{
-        return [
-          ...prev,
-          currentChatMessages.request
-        ]
-      })
-  }, [currentChatMessages])
 
   useEffect(() => {
-    setMessages(currentConversationData?.messages)
+    // setMessages(currentConversationData?.messages)
   },[currentConversationData])
 
   useEffect(()=>{
     
     renderMessages()
-  },[currentConversation])
+  },[currentConversationData])
   
   let tempMessages = [];
   useEffect(() => {

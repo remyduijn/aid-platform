@@ -6,15 +6,14 @@ const user=Cookies.get('user')
 export const createCurrentChatMessageApi = createAsyncThunk('currentChatMessage/createCurrentChatMessageApi',
   async (message) => {
     return axios
-      .post(`http://localhost:3001/chat_rooms/${message.chat_room_id}/messages`, {
+      .post(`http://localhost:3001/chat_rooms/${message?.chat_room_id}/messages`, {
         message: message,
         id: message.chat_room_id,
         session: {user_id: user} // not needed
       },
         { withCredentials: true })
-      .then(response => response.data)
+      .then(response => console.log(response.data))
   })
-
 
 const currentChatMessageApiSlice = createSlice({
   name: 'currentChatMessageApiData',

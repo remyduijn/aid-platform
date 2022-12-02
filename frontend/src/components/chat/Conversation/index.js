@@ -6,16 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { currentChatMessageData } from '../../../features/chatRoomMessagesSlice';
 import Cookies from 'js-cookie'
 import { useParams } from 'react-router-dom';
-import {currentConversation, setCurrentConversationMessages, currentVolunteerData, fetchChatsApiData, setCurrentConversation } from '../../../features/chatsApiSlice';
+import {currentConversation, setCurrentConversationMessages, currentVolunteerData, fetchChatsApiData, setCurrentConversation, setMessages, chatMessages } from '../../../features/chatsApiSlice';
 import Navigation from '../../Navbar';
 import actionCable from 'actioncable'
 const user=Cookies.get('user')
 
 export default function Conversation() {
 
-  const [messages, setMessages] = useState([])
+  // const [messages, setMessages] = useState([])
   const currentChatMessages = useSelector(currentChatMessageData)
   const currentConversationData = useSelector(currentConversation)
+  const chatMessage = useSelector(chatMessages)
   const dispatch = useDispatch()
   const params = useParams()
   const currentVolunteer = useSelector(currentVolunteerData)
@@ -33,7 +34,9 @@ export default function Conversation() {
       {
         received: (message) => {
           if (message.sender_id != user){
-            dispatch(setCurrentConversationMessages(message))
+            let chat = chatMessage;
+            let aarrr = [...chat, message]
+            dispatch(setMessages(aarrr))
           }
         }
       }
@@ -43,6 +46,9 @@ export default function Conversation() {
 
   useEffect(()=>{
     dispatch(fetchChatsApiData())
+    
+  },[])
+  useEffect(()=>{
     if (currentConversationData?.id) {
       createSocket()
     }

@@ -18,21 +18,11 @@ export default function ConversationList() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setUpdatedData(chats)
-  })
-
-  useEffect(() => {
     console.log(updatedData, "updatedData")
     // const x = updatedData.filter((updatedData)=>updatedData.id === params.id)
     const result = updatedData.filter((word) => {
       return word.id == params.id
     });
-    // setUpdatedData((prev) => {
-    //   return [
-    //     ...prev ,
-    //     updatedData.filter(word => word.id == params.id).messages
-    //   ]
-    // })
     setUpdatedData((prev)=>{
       if(result){
         return [
@@ -45,7 +35,6 @@ export default function ConversationList() {
     console.log("currentChatMessages", currentChatMessages, "currentConversationData", currentConversationData)
   }, [currentChatMessages])
 
-  console.log(chats, "chats of conversationList")
   return (
     <div className="conversation-list">
       <Toolbar

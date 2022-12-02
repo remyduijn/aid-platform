@@ -31,9 +31,7 @@ const CommunityForm = () => {
       lat: (cooardinate?.latitude),
       lng: (cooardinate?.longitude)
     }
-    console.log(cooardinate?.latitude)
     if (communityRequest.lat && communityRequest.lng) {
-      console.log("Submited Successfully")
       dispatch(CommunityFormApiData(communityRequest))
       toast("Successfully Submitted")
       navigate('/community')

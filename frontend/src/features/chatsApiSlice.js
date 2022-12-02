@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from 'js-cookie'
-const user=Cookies.get('user')
+const user = Cookies.get('user')
 
 export const fetchChatsApiData = createAsyncThunk('chats/fetchChatsApiData', async () => {
   return axios
@@ -9,16 +9,16 @@ export const fetchChatsApiData = createAsyncThunk('chats/fetchChatsApiData', asy
     .then(response => response.data)
 })
 
-export const fetchCurrentVolunteerData = createAsyncThunk('currentVolunteer/fetchCurrentVolunteerData', async ({requesterId , communityRequestId}) => {
+export const fetchCurrentVolunteerData = createAsyncThunk('currentVolunteer/fetchCurrentVolunteerData', async ({ requesterId, communityRequestId }) => {
   return axios
-    .post(`http://localhost:3001/chat_rooms` , {
-      chat_room : {
-        requester_id : requesterId,
-        community_request_id : communityRequestId
+    .post(`http://localhost:3001/chat_rooms`, {
+      chat_room: {
+        requester_id: requesterId,
+        community_request_id: communityRequestId
       },
-      session: {user_id: user} // not needed
+      session: { user_id: user } // not needed
     },
-    { withCredentials: true })
+      { withCredentials: true })
     .then(response => response.data)
 })
 
@@ -28,21 +28,28 @@ const chatsApiSlice = createSlice({
   initialState: {
     loading: false,
     chats: [],
+    messages: [],
     error: '',
     currentConversation: {},
     currentVolunteer: []
   },
   reducers: {
-    setCurrentConversation: (state, action) => {
+    setCurrentConversation: ((state, action) => {
       state.currentConversation = action.payload
-    },
-    setCurrentConversationMessages: (state, action) => {
-      let chat = state.currentConversation;
-      let messageArray = chat.messages;
-      messageArray.push(action.payload)
-      chat.messages = messageArray
-      state.currentConversation = chat;
-    }
+    }),
+    setCurrentConversationMessages: ((state, action) => {
+      // let chat = state.currentConversation;
+      // let messageArray = chat.messages;
+      // // messageArray.push(action.payload)
+      // console.log(action.payload);
+      // // [messageArray, ...action.payload]
+      // chat.messages = messageArray
+      // state.currentConversation = chat;
+      state.currentConversation = action.payload
+    }),
+    setMessages: ((state, action) => {
+      state.messages = action.payload
+    })
 
   },
   extraReducers: {
@@ -59,7 +66,7 @@ const chatsApiSlice = createSlice({
       return { ...state, error: "error" }
     },
     [fetchCurrentVolunteerData.fulfilled]: (state, { payload }) => {
-      console.log('successfull' , payload)
+      // console.log('successfull', payload)
       return { ...state, currentVolunteer: payload };
     },
   }
@@ -68,5 +75,6 @@ const chatsApiSlice = createSlice({
 export const allChats = (state) => state.chatsApiData.chats;
 export const currentVolunteerData = (state) => state.chatsApiData.currentVolunteer
 export const currentConversation = (state) => state.chatsApiData.currentConversation;
-export const { setCurrentConversation, setCurrentConversationMessages } = chatsApiSlice.actions
+export const chatMessages = (state) => state.chatsApiData.messages;
+export const { setCurrentConversation, setCurrentConversationMessages, setMessages } = chatsApiSlice.actions
 export default chatsApiSlice.reducer

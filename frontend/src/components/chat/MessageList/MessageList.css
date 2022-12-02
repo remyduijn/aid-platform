@@ -1,7 +1,10 @@
 .message-list-container {
   padding: 10px;
   padding-bottom: 20px;
+  flex: 1;
 }
-.compose{
-  position: absolute;
+
+.message-list {
+  display: flex;
+  flex-direction: column;
 }
