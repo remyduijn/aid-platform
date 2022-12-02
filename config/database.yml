@@ -5,14 +5,14 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
-  username: postgres
-  password: postgres
+  username: azan 
+  password: azan123
 development:
   <<: *default
-  database: aid_platform_development
+  database: af_survey_development
 test:
   <<: *default
-  database: aid_platform_test
+  database: af_survey_test
 production:
   <<: *default
   host: <%= Rails.application.credentials.dig(:database, :host) %>

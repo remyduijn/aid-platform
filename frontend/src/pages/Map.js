@@ -18,8 +18,12 @@ function Map() {
   const [selectedTask, setselectedTask] = useState(null);
   const [allVolunteersData, setAllVolunteersData] = useState([])
   const allVolunteers = useSelector(allVolunteerData)
+<<<<<<< HEAD
   console.log(allVolunteers, "allVolunteers")
   const [defaultCenter, setDefaultCenter] = useState({ lat: -27.59167956718997, lng: -48.53070394983697 })
+=======
+  const [defaultCenter, setDefaultCenter] = useState({lat: -27.59167956718997, lng: -48.53070394983697})
+>>>>>>> 546499d64685b92e9f3e3af6cd7950094bdc1a4f
   const loggedInUser = useSelector(loggedInUserData)
 
   const navigate = useNavigate();
@@ -44,7 +48,10 @@ function Map() {
   useEffect(() => {
     let defaultLat = 0.0;
     let defaultLng = 0.0;
+<<<<<<< HEAD
     console.log(allVolunteers, ".................allVolunteers")
+=======
+>>>>>>> 546499d64685b92e9f3e3af6cd7950094bdc1a4f
     if (allVolunteers) {
       setAllVolunteersData(allVolunteers)
       allVolunteers?.map(item => {
@@ -56,6 +63,7 @@ function Map() {
         lat: parseFloat(defaultLat / allVolunteers?.length),
         lng: parseFloat(defaultLng / allVolunteers?.length)
       })
+<<<<<<< HEAD
       console.log(defaultCenter)
     }
 
@@ -101,6 +109,40 @@ function Map() {
           <InfoWindow
             onCloseClick={() => {
               setselectedTask(null);
+=======
+}
+  
+  }, [allVolunteers])
+if (allVolunteersData) {
+}
+const moveToChatArea = async (selectedTask1) => {
+  const requesterId = selectedTask1?.user?.id
+  const communityRequestId = selectedTask1?.id
+  if(requesterId !== communityRequestId){
+    const chatId = await dispatch(fetchCurrentVolunteerData({requesterId,communityRequestId}))
+    
+      const path = `/chatrooms/${chatId.payload.id}`
+      navigate(path)
+  }
+}
+return (
+  <>
+    <GoogleMap
+      defaultZoom={12}
+      defaultCenter={{ lat: 31.45574, lng: 74.276607 }}
+    // defaultOptions={{ styles: mapStyles }}
+    >
+      {allVolunteersData?.map((task) => (
+        <>
+          <Marker
+            key={task.id}
+            position={{
+              lat: parseFloat(task?.lat),
+              lng: parseFloat(task?.lng)
+            }}
+            onClick={() => {
+              setselectedTask(task);
+>>>>>>> 546499d64685b92e9f3e3af6cd7950094bdc1a4f
             }}
             position={{
               lat: parseFloat(selectedTask?.lat),

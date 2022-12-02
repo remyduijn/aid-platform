@@ -4,6 +4,7 @@ import ConversationList from '../components/chat/ConversationList';
 import '../components/chat/Messenger/Messenger.css';
 import Navigation from '../components/Navbar';
 import { fetchChatsApiData } from '../features/chatsApiSlice';
+import { useDispatch } from 'react-redux';
 
 export default function ChatRoom () {
   const dispatch = useDispatch()
