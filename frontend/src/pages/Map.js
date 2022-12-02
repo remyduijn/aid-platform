@@ -8,28 +8,24 @@ import {
   InfoWindow
 } from 'react-google-maps';
 import { useDispatch, useSelector } from "react-redux";
-import { getCommunityFormApiData, allVolunteerData, setSelectedVolunteer} from "../features/communityFormApiSlice";
-// import { currentLocationCooardinates } from "../features/getCurrentLocationSlice"
-
+import { getCommunityFormApiData, allVolunteerData } from "../features/communityFormApiSlice";
 import Navigation from "../components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { fetchCurrentVolunteerData } from "../features/chatsApiSlice";
 import { loggedInUserData, setLoggedInUser } from "../features/userSlice";
-// import mapStyles from '../mapStyles';
 
 function Map() {
   const [selectedTask, setselectedTask] = useState(null);
   const [allVolunteersData, setAllVolunteersData] = useState([])
   const allVolunteers = useSelector(allVolunteerData)
-  console.log(allVolunteers , "allVolunteers")
-  const [defaultCenter, setDefaultCenter] = useState({lat: -27.59167956718997, lng: -48.53070394983697})
+  console.log(allVolunteers, "allVolunteers")
+  const [defaultCenter, setDefaultCenter] = useState({ lat: -27.59167956718997, lng: -48.53070394983697 })
   const loggedInUser = useSelector(loggedInUserData)
 
   const navigate = useNavigate();
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getCommunityFormApiData())
-    
   }, [])
 
   useEffect(() => {
@@ -48,89 +44,84 @@ function Map() {
   useEffect(() => {
     let defaultLat = 0.0;
     let defaultLng = 0.0;
-    console.log(allVolunteers , ".................allVolunteers")
+    console.log(allVolunteers, ".................allVolunteers")
     if (allVolunteers) {
       setAllVolunteersData(allVolunteers)
       allVolunteers?.map(item => {
-        // defaultLat = defaultLat + item.lat
         defaultLat = defaultLat + parseFloat(item.lat)
         defaultLng = defaultLng + parseFloat(item.lng)
       })
 
-      // console.log(defaultLat.length)
       setDefaultCenter({
-        lat: parseFloat(defaultLat/allVolunteers?.length),
-        lng: parseFloat(defaultLng/allVolunteers?.length)
+        lat: parseFloat(defaultLat / allVolunteers?.length),
+        lng: parseFloat(defaultLng / allVolunteers?.length)
       })
       console.log(defaultCenter)
-}
-  
+    }
+
   }, [allVolunteers])
-if (allVolunteersData) {
-  console.log(allVolunteersData, "allVolunteersData")
-}
-const moveToChatArea = async (selectedTask1) => {
-  console.log("selectedTask" , selectedTask1)
-  const requesterId = selectedTask1?.user?.id
-  const communityRequestId = selectedTask1?.id
-  if(requesterId !== communityRequestId){
-    const chatId = await dispatch(fetchCurrentVolunteerData({requesterId,communityRequestId}))
-    
-      const path = `/chatrooms/${chatId.payload.id}`
-      navigate(path)
+  if (allVolunteersData) {
+    console.log(allVolunteersData, "allVolunteersData")
   }
-}
-return (
-  <>
-    <GoogleMap
-      defaultZoom={12}
-      defaultCenter={{ lat: 31.45574, lng: 74.276607 }}
-    // defaultOptions={{ styles: mapStyles }}
-    >
-      {allVolunteersData?.map((task) => (
-        <>
-          {console.log(parseFloat(task?.lat))}
-          <Marker
-            key={task.id}
+  const moveToChatArea = async (selectedTask1) => {
+    console.log("selectedTask", selectedTask1)
+    const requesterId = selectedTask1?.user?.id
+    const communityRequestId = selectedTask1?.id
+    const chatId = await dispatch(fetchCurrentVolunteerData({ requesterId, communityRequestId }))
+    const path = `/chatrooms/${chatId.payload.id}`
+    navigate(path)
+  }
+  return (
+    <>
+      <GoogleMap
+        defaultZoom={12}
+        defaultCenter={{ lat: 31.45574, lng: 74.276607 }}
+      // defaultOptions={{ styles: mapStyles }}
+      >
+        {allVolunteersData?.map((task) => (
+          <>
+            {console.log(parseFloat(task?.lat))}
+            <Marker
+              key={task.id}
+              position={{
+                lat: parseFloat(task?.lat),
+                lng: parseFloat(task?.lng)
+              }}
+              onClick={() => {
+                setselectedTask(task);
+              }}
+              icon={{
+                url: `/pin.svg`,
+                scaledSize: new window.google.maps.Size(35, 35),
+              }}
+            />
+          </>
+        ))}
+        {selectedTask && (
+          <InfoWindow
+            onCloseClick={() => {
+              setselectedTask(null);
+            }}
             position={{
-              lat: parseFloat(task?.lat),
-              lng: parseFloat(task?.lng)
+              lat: parseFloat(selectedTask?.lat),
+              lng: parseFloat(selectedTask?.lng)
             }}
-            onClick={() => {
-              setselectedTask(task);
-            }}
-            icon={{
-              url: `/pin.svg`,
-              scaledSize: new window.google.maps.Size(35, 35),
-            }}
-          />
-        </>
-      ))}
-      {selectedTask &&(
-        <InfoWindow
-          onCloseClick={() => {
-            setselectedTask(null);
-          }}
-          position={{
-            lat: parseFloat(selectedTask?.lat),
-            lng: parseFloat(selectedTask?.lng)
-          }}
-        >
-          <div className="info-wrapper">
-            <a>
-              Name: {selectedTask?.user?.name} <br/>
-              Type of request: {selectedTask?.request_type}<br />
-              Description: {selectedTask?.description}<br />
-              Status: {selectedTask?.status}<br />
-              {(loggedInUser.id !== selectedTask?.user_id) ?
-              <button onClick={() => moveToChatArea(selectedTask)}>Volunteer</button> : null}
-            </a>
-          </div>
-        </InfoWindow>
-      )}
-    </GoogleMap>
-  </>
-);
+          >
+            <div className="info-wrapper">
+              <a>
+                Name: {selectedTask?.user?.name} <br />
+                Type of request: {selectedTask?.request_type}<br />
+                Description: {selectedTask?.description}<br />
+                Status: {selectedTask?.status}<br />
+                {(loggedInUser.id !== selectedTask?.user_id) ?
+                  <button onClick={() => moveToChatArea(selectedTask)}>Volunteer</button> : null}
+              </a>
+            </div>
+          </InfoWindow>
+        )}
+      </GoogleMap>
+    </>
+  );
 }
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));

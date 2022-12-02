@@ -4,7 +4,6 @@ class ChatRoomsController < ApplicationController
   def index
     @chatrooms = ChatRoom.all
     @chatrooms = @chatrooms.by_logged_in_user(@current_user.id) if @current_user.present?
-    # debugger
     render json: @chatrooms, include: [:volunteer, :requester, :messages], status: 200
   end
 

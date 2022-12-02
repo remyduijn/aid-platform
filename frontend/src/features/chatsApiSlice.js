@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
 const user=localStorage.getItem('user')
 
 export const fetchChatsApiData = createAsyncThunk('chats/fetchChatsApiData', async () => {
@@ -9,7 +8,7 @@ export const fetchChatsApiData = createAsyncThunk('chats/fetchChatsApiData', asy
     .then(response => response.data)
 })
 
-export const fetchCurrentVolunteerData = createAsyncThunk('chats/fetchCurrentVolunteerData', async ({requesterId , communityRequestId}) => {
+export const fetchCurrentVolunteerData = createAsyncThunk('currentVolunteer/fetchCurrentVolunteerData', async ({requesterId , communityRequestId}) => {
   return axios
     .post(`http://localhost:3001/chat_rooms` , {
       chat_room : {
@@ -31,7 +30,6 @@ const chatsApiSlice = createSlice({
     error: '',
     currentConversation: {},
     currentVolunteer: [],
-    // singleChat: {}
   },
   reducers: {
     setCurrentConversation: (state, action) => {
@@ -50,12 +48,17 @@ const chatsApiSlice = createSlice({
     [fetchChatsApiData.rejected]: (state) => {
       console.log("rejected")
       return { ...state, error: "error" }
-    }
+    },
+    [fetchCurrentVolunteerData.fulfilled]: (state, { payload }) => {
+      console.log('successfull' , payload)
+      return { ...state, currentVolunteer: payload };
+    },
   }
 })
 
 export const allChats = (state) => state.chatsApiData.chats;
 export const currentVolunteerData = (state) => state.chatsApiData.currentVolunteer
 export const currentConversation = (state) => state.chatsApiData.currentConversation;
+
 export const { setCurrentConversation } = chatsApiSlice.actions
 export default chatsApiSlice.reducer

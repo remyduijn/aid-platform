@@ -1,11 +1,11 @@
-import {UseState} from "react"
- 
+import { UseState } from "react"
+
 const Form = () => {
-const [userName, setUserName] = UseState ("");
- 
+  const [userName, setUserName] = UseState("");
+
   return (
     <form
-     onSubmit = {(e) => e.preventDefault()}
+      onSubmit={(e) => e.preventDefault()}
     >
       <input
         type="text"
@@ -13,7 +13,6 @@ const [userName, setUserName] = UseState ("");
         onChange={(e) => setUserName(e.target.value)}
         placeholder="Username"
       />
-       
       <label>
         <input
           type="checkbox"
@@ -24,5 +23,5 @@ const [userName, setUserName] = UseState ("");
     </form>
   );
 };
- 
+
 export default Form;

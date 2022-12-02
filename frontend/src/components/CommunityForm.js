@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react"
 import Navigation from "./Navbar";
-import { useDispatch , useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CommunityFormApiData } from "../features/communityFormApiSlice"
-// import { setCurrentLocationCooardinates } from "../features/getCurrentLocationSlice";
-// import { cooardinatesData } from "../features/getCurrentLocationSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 const CommunityForm = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
   const [type, setType] = useState("");
   const [description, setDescription] = useState("")
   const [cooardinate, setCooardinates] = useState([])
-  // const locationCooardinates = useSelector(cooardinatesData)
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -23,10 +19,6 @@ const CommunityForm = () => {
           "latitude": position.coords.latitude,
           "longitude": position.coords.longitude
         })
-        // setCurrentLocationCooardinates({
-        //   "latitude": position.coords.latitude,
-        //   "longitude": position.coords.longitude
-        // })
       });
     }
   }, [])
@@ -40,13 +32,13 @@ const CommunityForm = () => {
       lng: (cooardinate?.longitude)
     }
     console.log(cooardinate?.latitude)
-    if(communityRequest.lat && communityRequest.lng){
+    if (communityRequest.lat && communityRequest.lng) {
       console.log("Submited Successfully")
       dispatch(CommunityFormApiData(communityRequest))
       toast("Successfully Submitted")
       navigate('/community')
     }
-    else{
+    else {
       toast('You need to allow the location permission in order to see the requests around your current location')
     }
     setType('')

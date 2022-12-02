@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState , useRef} from 'react';
 import Compose from '../Compose';
 import Toolbar from '../Toolbar';
 import ToolbarButton from '../ToolbarButton';
 import Message from '../Message';
 import moment from 'moment';
-import { currentConversation } from '../../../features/chatsApiSlice';
-import { currentChatMessagesData } from '../../../features/chatRoomMessagesSlice';
+import { currentConversation, currentVolunteerData, setCurrentConversation } from '../../../features/chatsApiSlice';
+import { currentChatMessageData } from '../../../features/chatRoomMessagesSlice';
 
 import './MessageList.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { loggedInUserData } from '../../../features/userSlice';
 
 const MY_USER_ID = 'apple';
@@ -16,11 +16,16 @@ const MY_USER_ID = 'apple';
 export default function MessageList() {
   const [messages, setMessages] = useState([])
   const currentConversationData = useSelector(currentConversation)
-  const currentChatMessages = useSelector(currentChatMessagesData)
+  const currentChatMessages = useSelector(currentChatMessageData)
 
   const loggedInUser = useSelector(loggedInUserData)
-  console.log(loggedInUser , "........loggedInUser ....... in M")
-  
+
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
   useEffect(()=>{
       setMessages((prev)=>{
         return [
@@ -34,10 +39,14 @@ export default function MessageList() {
     setMessages(currentConversationData?.messages)
   },[currentConversationData])
   
+  let tempMessages = [];
+  useEffect(() => {
+    scrollToBottom()
+  }, [tempMessages]);
+
   const renderMessages = () => {
     let i = 0;
     let messageCount = messages?.length;
-    let tempMessages = [];
 
     while (i < messageCount) {
       let previous = messages[i - 1];
@@ -89,7 +98,6 @@ export default function MessageList() {
       // Proceed to the next message.
       i += 1;
     }
-
     return tempMessages;
   }
     return(
@@ -103,7 +111,7 @@ export default function MessageList() {
           ]}
         />
 
-        <div className="message-list-container">{renderMessages()}</div>
+        <div className="message-list-container">{renderMessages()} <div ref={messagesEndRef} /></div>
 
         <Compose rightItems={[
           <ToolbarButton key="photo" icon="ion-ios-camera" />,

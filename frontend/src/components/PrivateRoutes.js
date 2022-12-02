@@ -1,14 +1,3 @@
-// import { Outlet, Navigate } from 'react-router-dom'
-
-// const PrivateRoutes = () => {
-//     let auth = {'token':true}
-//     return(
-//         auth.token ? <Outlet/> : <Navigate to="/signin"/>
-//     )
-// }
-
-// export default PrivateRoutes
-
 import React from 'react'
 import {Navigate, Outlet} from 'react-router-dom'
 
@@ -24,7 +13,6 @@ const useAuth=()=>{
 
 const  PrivateRoutes=(props) =>{
   const auth=useAuth()
-
   return auth?<Outlet/>: <Navigate to="/signin"/>
 }
 
