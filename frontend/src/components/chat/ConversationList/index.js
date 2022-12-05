@@ -1,40 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ConversationSearch from '../ConversationSearch';
 import ConversationListItem from '../ConversationListItem';
 import Toolbar from '../Toolbar';
 import ToolbarButton from '../ToolbarButton';
-import { allChats, currentConversation } from '../../../features/chatsApiSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { allChats } from '../../../features/chatsApiSlice';
 import './ConversationList.css';
-import { currentChatMessageData } from '../../../features/chatRoomMessagesSlice';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function ConversationList() {
   const chats = useSelector(allChats)
-  const currentChatMessages = useSelector(currentChatMessageData)
-  const currentConversationData = useSelector(currentConversation)
-  const [updatedData, setUpdatedData] = useState(chats)
-  const params = useParams()
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    console.log(updatedData, "updatedData")
-    // const x = updatedData.filter((updatedData)=>updatedData.id === params.id)
-    const result = updatedData.filter((word) => {
-      return word.id == params.id
-    });
-    setUpdatedData((prev)=>{
-      if(result){
-        return [
-          ...prev ,
-          result
-        ]
-      }
-    })
-    
-    console.log("currentChatMessages", currentChatMessages, "currentConversationData", currentConversationData)
-  }, [currentChatMessages])
-
+  
   return (
     <div className="conversation-list">
       <Toolbar
@@ -46,7 +21,7 @@ export default function ConversationList() {
           <ToolbarButton key="add" icon="ion-ios-add-circle-outline" />
         ]}
       />
-      <ConversationSearch />
+      {/* <ConversationSearch /> */}
       {
         chats?.map(conversation =>
           <ConversationListItem

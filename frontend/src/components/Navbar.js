@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie'
 
 const Div = styled.div`
   background-color: #ff8080; 
@@ -23,6 +24,7 @@ export default class Navigation extends Component {
       .delete("http://localhost:3001/logout", { withCredentials: true })
       .then(response => {
         localStorage.removeItem("user");
+        Cookies.remove('user')
         this.props.handleLogout();
       })
       .catch(error => {

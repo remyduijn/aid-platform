@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../style.scss';
 import Add from '../../images/addAvatar.png';
-
+import Cookies from 'js-cookie'
 
 export default class Registration extends Component {
   constructor(props) {
@@ -51,6 +51,7 @@ export default class Registration extends Component {
         )
         .then(response => {
           if (response.data.status === 'created') {
+          Cookies.set('user', response.data.user.id)
           this.props.handleSuccessfulAuth(response.data);
           }
         })

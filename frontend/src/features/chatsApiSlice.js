@@ -5,7 +5,7 @@ const user = Cookies.get('user')
 
 export const fetchChatsApiData = createAsyncThunk('chats/fetchChatsApiData', async () => {
   return axios
-    .get(`http://localhost:3001/chat_rooms?user_id=${user}`)
+  .get("http://localhost:3001/chat_rooms", { withCredentials: true })
     .then(response => response.data)
 })
 
@@ -28,27 +28,18 @@ const chatsApiSlice = createSlice({
   initialState: {
     loading: false,
     chats: [],
-    messages: [],
+    currentConversationmessages: [],
     error: '',
-    currentConversation: {},
-    currentVolunteer: []
+    currentConversation: {}
   },
   reducers: {
     setCurrentConversation: ((state, action) => {
       state.currentConversation = action.payload
+      state.currentConversationmessages = action.payload.messages;
     }),
-    setCurrentConversationMessages: ((state, action) => {
-      // let chat = state.currentConversation;
-      // let messageArray = chat.messages;
-      // // messageArray.push(action.payload)
-      // console.log(action.payload);
-      // // [messageArray, ...action.payload]
-      // chat.messages = messageArray
-      // state.currentConversation = chat;
-      state.currentConversation = action.payload
-    }),
-    setMessages: ((state, action) => {
-      state.messages = action.payload
+    setCurrentConversationMessages: ((state, {payload}) => {
+      let chat = payload.currentConversationData;
+      state.currentConversationmessages = [...chat.messages, payload.message];
     })
 
   },
@@ -67,14 +58,13 @@ const chatsApiSlice = createSlice({
     },
     [fetchCurrentVolunteerData.fulfilled]: (state, { payload }) => {
       // console.log('successfull', payload)
-      return { ...state, currentVolunteer: payload };
+      return { ...state, currentConversation: payload };
     },
   }
 })
 
 export const allChats = (state) => state.chatsApiData.chats;
-export const currentVolunteerData = (state) => state.chatsApiData.currentVolunteer
 export const currentConversation = (state) => state.chatsApiData.currentConversation;
-export const chatMessages = (state) => state.chatsApiData.messages;
-export const { setCurrentConversation, setCurrentConversationMessages, setMessages } = chatsApiSlice.actions
+export const currentConversationmessages = (state) => state.chatsApiData.currentConversationmessages;
+export const { setCurrentConversation, setCurrentConversationMessages } = chatsApiSlice.actions
 export default chatsApiSlice.reducer
