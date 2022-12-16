@@ -9,8 +9,6 @@
     justify-content: center;
 }
 
-
-
 .info-wrapper {
     text-align: center;
     font-size: 14px;
@@ -25,4 +23,13 @@ section {
 .fontBold {
     font-weight: 600;
     color: rgb(39, 38, 38);
+}
+
+.messageButton {
+    margin-top: 10px;
+    margin-bottom: 3px;
+    border-radius: 5px;
+    background-color: #fff;
+} .messageButton:hover {
+    background-color: rgb(233, 233, 233);
 }
