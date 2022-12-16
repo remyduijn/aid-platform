@@ -108,7 +108,7 @@ function Map() {
                 Description: {selectedVolunteer?.description}<br />
                 Status: {selectedVolunteer?.status}<br />
                 {(loggedInUser.id !== selectedVolunteer?.user_id) ?
-                  <button onClick={() => moveToChatArea(selectedVolunteer)}>Volunteer</button> : null}
+                  <button className="messageButton" onClick={() => moveToChatArea(selectedVolunteer)}>Volunteer</button> : null}
               </a>
             </div>
           </InfoWindow>
