@@ -57,10 +57,9 @@ const CommunityForm = () => {
                 aria-label="Default select example"
                 value={type}
                 onChange={e => setType(e.target.value)}>
-                <option selected>Select Type</option>
-                <option value="One">One</option>
-                <option value="Two">Two</option>
-                <option value="Three">Three</option>
+//                 <option selected>Select Type</option>
+                <option value="One">One-time task</option>
+                <option value="Two">Homestay</option>
               </select>
             </div>
             <div className="form-group mt-3">
