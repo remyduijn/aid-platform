@@ -13,18 +13,10 @@ const Div = styled.div`
 `;
 
 export default class Navigation extends Component {
+
   constructor(props) {
     super(props);
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
-
-    this.state = {
-      loggedInUserName: []
-    }
-    store.subscribe(() => {
-      this.setState({
-        loggedInUserName: store.getState().loggedInUser
-      })
-    })
   }
 
   handleLogoutClick() {
@@ -41,7 +33,8 @@ export default class Navigation extends Component {
   }
 
   render() {
-    console.log(this.state.loggedInUserName?.loggedInUser , "...")
+    const userName = store.getState().loggedInUser?.loggedInUser?.full_name
+
     return (
       <Div>
         <Navbar expand="lg" className='position-sticky'>
@@ -57,7 +50,7 @@ export default class Navigation extends Component {
                 <Nav.Link className='text-white' as={Link} to={"/communityform"}> Community Help </Nav.Link>
               </Nav>
               <Nav>
-                <Nav.Link className='text-white p-0 user-icon' href="#deets"><i class="bi bi-person-circle"></i><span className='px-1 ms-1'>{this.state.loggedInUserName?.loggedInUser?.full_name}</span></Nav.Link>
+                <Nav.Link className='text-white p-0 user-icon' href="#deets"><i class="bi bi-person-circle"></i><span className='px-1 ms-1'>{userName}</span></Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
