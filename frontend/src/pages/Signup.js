@@ -10,7 +10,6 @@ export default class Signup extends Component {
     this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
     // this.handleLogoutClick = this.handleLogoutClick.bind(this);
   }
-
   handleSuccessfulAuth(data) {
     this.props.handleLogin(data);
     window.location.href = "/community";

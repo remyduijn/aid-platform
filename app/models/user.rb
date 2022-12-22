@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+  attr_accessor :full_name
+
   has_secure_password
 
   validates_presence_of :email
@@ -9,5 +12,10 @@ class User < ApplicationRecord
   has_one_attached :identity
   has_many :community_requests
   has_many :chat_rooms
+
+
+  def full_name
+    name + " " + last_name
+  end
 end
  

@@ -324,3 +324,27 @@
     }
   }
 }
+
+.nav.nav-pills .nav-link.active {
+  background-color:  #ff8080
+}
+.navbar-brand {
+  transition: .2s all;
+}
+.navbar-brand:hover, .nav-link:hover{
+  color: #333 !important;
+}
+.navbar-nav {
+  line-height: 0;
+  a.nav-link {
+    font-weight: 500;
+  }
+  a.user-icon {
+    display: flex;
+    align-items: center;
+    transition: .3s all;
+    i {
+      font-size: 30px;
+    }
+  }
+}

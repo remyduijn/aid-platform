@@ -6,17 +6,25 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie'
+import store from "../store"
 
 const Div = styled.div`
   background-color: #ff8080; 
 `;
 
 export default class Navigation extends Component {
-
-  constructor(props) { 
+  constructor(props) {
     super(props);
-
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
+
+    this.state = {
+      loggedInUserName: []
+    }
+    store.subscribe(() => {
+      this.setState({
+        loggedInUserName: store.getState().loggedInUser
+      })
+    })
   }
 
   handleLogoutClick() {
@@ -32,27 +40,31 @@ export default class Navigation extends Component {
       });
   }
 
-  render() { 
-  return (
-    <Div>
-    <Navbar expand="lg" className='position-sticky'>
-      <Container>
-        <Navbar.Brand as={Link} to={"/"} className="fontBold">Pet Platform</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to={"/"}>Home</Nav.Link>
-            <Nav.Link as={Link} to={"/dashboard"}>Dashboard</Nav.Link>
-            <Nav.Link as={Link} to={"/chatrooms"}>Chat</Nav.Link>
-            <Nav.Link as={Link} to={"/signin"} onClick={() => this.handleLogoutClick()}>Logout</Nav.Link>
-            <Nav.Link as={Link} to={"/communityform"}> Community Help </Nav.Link>
-          </Nav>
-        </Navbar.Collapse> 
-      </Container>
-    </Navbar>
-    </Div>
-  );
-}
+  render() {
+    console.log(this.state.loggedInUserName?.loggedInUser , "...")
+    return (
+      <Div>
+        <Navbar expand="lg" className='position-sticky'>
+          <Container>
+            <Navbar.Brand as={Link} to={"/"} className="fontBold text-white">Pet Platform</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link className='text-white' as={Link} to={"/"}>Home</Nav.Link>
+                <Nav.Link className='text-white' as={Link} to={"/dashboard"}>Dashboard</Nav.Link>
+                <Nav.Link className='text-white' as={Link} to={"/chatrooms"}>Chat</Nav.Link>
+                <Nav.Link className='text-white' as={Link} to={"/signin"} onClick={() => this.handleLogoutClick()}>Logout</Nav.Link>
+                <Nav.Link className='text-white' as={Link} to={"/communityform"}> Community Help </Nav.Link>
+              </Nav>
+              <Nav>
+                <Nav.Link className='text-white p-0 user-icon' href="#deets"><i class="bi bi-person-circle"></i><span className='px-1 ms-1'>{this.state.loggedInUserName?.loggedInUser?.full_name}</span></Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      </Div>
+    );
+  }
 }
 
 
