@@ -12,7 +12,8 @@ Rails.application.routes.draw do
     end
 
     member do
-      put :mark_fulfilled
+      put  :mark_fulfilled
+      post :republish
     end
   end
 

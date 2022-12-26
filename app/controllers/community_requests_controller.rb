@@ -1,6 +1,6 @@
 class CommunityRequestsController < ApplicationController
   include CurrentUserConcern
-  before_action :set_community_request, only: %i[update mark_fulfilled]
+  before_action :set_community_request, only: %i[update mark_fulfilled republish]
 
   def index
     @community_requests = CommunityRequest.all
@@ -40,6 +40,17 @@ class CommunityRequestsController < ApplicationController
       render json: {request: @community_request, status: :ok}
     else
       render json: {errors: @community_request.errors.full_messages, status: 409}
+    end
+  end
+
+  def republish
+    return render json: {errors: "Community request cann't republish before one day.", status: 409} unless @community_request.can_republish?
+
+    @new_community_request = @community_request.dup
+    if @new_community_request.save
+      render json:  @new_community_request, status: :ok
+    else
+      render json: {errors: @new_community_request.errors.full_messages, status: 409}
     end
   end
 
