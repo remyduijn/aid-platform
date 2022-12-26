@@ -1,9 +1,8 @@
-import { Button } from 'bootstrap';
-import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import data from "../data/Requests.json"
-const Requests = () => {
-  const [RequesterData, setRequestersData] = useState(data.data)
+import { useSelector } from 'react-redux';
+import { allRequestedRequests } from '../features/getRequestsApiSlice';
+const Requests = ({requests}) => {
+  const requestedData = useSelector(allRequestedRequests)
   return (
     <>
       <Table striped>
@@ -17,16 +16,15 @@ const Requests = () => {
           </tr>
         </thead>
         <tbody>
-          {RequesterData.map((currRequesterData) => {
+          {requests.map((currRequesterData , index) => {
             return (
               <>
                 <tr>
-                  <td>{currRequesterData.properties.ID}</td>
-                  <td>{currRequesterData.properties.FIRST_NAME}</td>
-                  <td>{currRequesterData.properties.LAST_NAME}</td>
-                  <td>{currRequesterData.properties.TYPE}</td>
-                  {currRequesterData.properties.STATUS === "Unfulfilled" ?
-                  <tb className="d-flex align-content-center"><button className='btn btn-danger btn-sm'>Not fulfill</button></tb> : null}
+                  <td>{index +1}</td>
+                  <td>{currRequesterData?.request_type}</td>
+                  <td>{currRequesterData?.description}</td>
+                  {/* {currRequesterData?.status === "Unfulfilled" ?
+                  <tb className="d-flex align-content-center"><button className='btn btn-danger btn-sm'>Not fulfill</button></tb> : null} */}
                 </tr>
               </>
             )

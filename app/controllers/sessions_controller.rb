@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
 
     def logged_in 
         if @current_user
+            session[:user_id] = @current_user.id
             render json: {
                 logged_in: true, 
                 user: @current_user.as_json(methods: [:full_name])

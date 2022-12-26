@@ -34,6 +34,7 @@ export default class Navigation extends Component {
 
   render() {
     const userName = store.getState().loggedInUser?.loggedInUser?.full_name
+    console.log("store.getState().loggedInUser?.loggedInUser" , store.getState().loggedInUser?.loggedInUser?.id)
 
     return (
       <Div>

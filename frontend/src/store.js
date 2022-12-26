@@ -4,6 +4,8 @@ import { currentLocationCooardinatesReducer } from "./features/getCurrentLocatio
 import chatsApiSlice from "./features/chatsApiSlice";
 import {loggedInUserReducer} from "./features/userSlice";
 import currentChatMessageApiSlice  from "./features/chatRoomMessagesSlice";
+import getRequestsApiSlice from "./features/getRequestsApiSlice";
+
 
 const store = configureStore({
     reducer:{
@@ -11,7 +13,8 @@ const store = configureStore({
         currentLocationCooardinates : currentLocationCooardinatesReducer,
         chatsApiData : chatsApiSlice,
         loggedInUser : loggedInUserReducer,
-        currentChatMessageApiData : currentChatMessageApiSlice
+        currentChatMessageApiData : currentChatMessageApiSlice,
+        requestsData : getRequestsApiSlice
     }
 })
 
