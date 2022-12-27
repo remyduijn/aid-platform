@@ -26,14 +26,12 @@ class CommunityRequestsController < ApplicationController
   end
 
   def requested
-    user = User.find 4
-    @requested_requests = user.community_requests
+    @requested_requests = @current_user.present? ? @current_user&.community_requests : []
     render json: @requested_requests, status: :ok
   end
 
   def volunteered
-    user = User.find 4
-    @volunteered_requests = CommunityRequest.volunteered_by_specific_user(user.id)
+    @volunteered_requests = @current_user.present? ? CommunityRequest.volunteered_by_specific_user(@current_user&.id) : []
     render json: @volunteered_requests, status: :ok
   end
 

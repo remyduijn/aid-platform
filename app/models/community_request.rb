@@ -5,7 +5,14 @@ class CommunityRequest < ApplicationRecord
   FULFILLED   = 'fulfilled'
   UNFULFILLED = 'unfulfilled'
 
-  enum status: { fulfilled: FULFILLED,  unfulfilled: UNFULFILLED}
+  enum status: { fulfilled: FULFILLED,  unfulfilled: UNFULFILLED}, _default: :unfulfilled
+
+
 
   scope :volunteered_by_specific_user, -> (user_id) { joins(:chat_rooms).where('chat_rooms.volunteer_id= ?', user_id) }
+
+
+  def status
+    super.titleize
+  end
 end

@@ -16,8 +16,8 @@ import { loggedInUserData, setLoggedInUser } from "../features/userSlice";
 
 function Map() {
   const [selectedVolunteer, setSelectedVolunteer] = useState(null);
-  const [allVolunteersData, setAllVolunteersData] = useState([])
   const allVolunteers = useSelector(allVolunteerData)
+  // const [allVolunteersData, setAllVolunteersData] = useState(allVolunteers)
   const [defaultCenter, setDefaultCenter] = useState({ lat: -27.59167956718997, lng: -48.53070394983697 })
   const loggedInUser = useSelector(loggedInUserData)
 
@@ -44,7 +44,6 @@ function Map() {
     let defaultLat = 0.0;
     let defaultLng = 0.0;
     if (allVolunteers) {
-      setAllVolunteersData(allVolunteers)
       allVolunteers?.map(item => {
         defaultLat = defaultLat + parseFloat(item.lat)
         defaultLng = defaultLng + parseFloat(item.lng)
@@ -57,8 +56,7 @@ function Map() {
     }
 
   }, [allVolunteers])
-  if (allVolunteersData) {
-  }
+
   const moveToChatArea = async (selectedVolunteer1) => {
     const requesterId = selectedVolunteer1?.user?.id
     const communityRequestId = selectedVolunteer1?.id
@@ -73,16 +71,16 @@ function Map() {
         defaultCenter={{ lat: -27.59167956718997, lng: -48.53070394983697 }}
       // defaultOptions={{ styles: mapStyles }}
       >
-        {allVolunteersData?.map((task) => (
+        {allVolunteers?.map((currentVolunteer) => (
           <>
             <Marker
-              key={task.id}
+              key={currentVolunteer.id}
               position={{
-                lat: parseFloat(task?.lat),
-                lng: parseFloat(task?.lng)
+                lat: parseFloat(currentVolunteer?.lat),
+                lng: parseFloat(currentVolunteer?.lng)
               }}
               onClick={() => {
-                setSelectedVolunteer(task);
+                setSelectedVolunteer(currentVolunteer);
               }}
               icon={{
                 url: `/pin.svg`,
