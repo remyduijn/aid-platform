@@ -34,7 +34,7 @@ const Requests = ({requests , requestType}) => {
                   <td>{currRequesterData?.user?.last_name}</td>
                   <td>{currRequesterData?.request_type}</td>
                   <td>{currRequesterData?.description}</td>
-                  {currRequesterData?.status === "Unfulfilled" ? <tb className="d-flex align-content-center"><button className='btn btn-danger btn-sm' onClick={()=>markedAsFullfilled(currRequesterData?.id)}>Marked as Fulfill</button></tb> : <tb className="d-flex align-content-center">{currRequesterData?.status}</tb>}
+                  {currRequesterData?.status === "unfulfilled" ? <tb className="d-flex align-content-center"><button className='btn btn-danger btn-sm' onClick={()=>markedAsFullfilled(currRequesterData?.id)}>Marked as Fulfill</button></tb> : <tb className="d-flex align-content-center">{currRequesterData?.status}</tb>}
                   {/* {requestType === REQUEST_TYPE_REQUESTED_REQUESTS ?  <tb className="d-flex align-content-center"><button className='btn btn-success btn-sm' onClick={()=>rePublishRequest()}>ReSend</button></tb> : null} */}
                 </tr>
               </>
